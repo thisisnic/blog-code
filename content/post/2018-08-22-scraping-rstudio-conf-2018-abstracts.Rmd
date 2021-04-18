@@ -1,0 +1,454 @@
+---
+title: "Scraping rstudio::conf 2018 Abstracts"
+author: "Nic"
+date: '2018-08-22'
+slug: scraping-rstudio-conf-2018-abstracts
+tags:
+- rvest
+- tidyverse
+categories:
+- R
+- Web Scraping
+type: post
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+RStudio Conference 2019 takes place in January 2019, and this week RStudio put out a [call for contributed talks and e-posters](https://blog.rstudio.com/2018/08/20/rstudio-conf-2019-contributed-talks-eposters/).  Though I was eager to browse previous years' abstracts for inspiration, I couldn't find them all in one place, and so I decided to use one of my favourite R packages, `rvest`, to do some web scraping to grab the content.
+
+My main aim was to find all of the abstracts for the contributed talks only from 2018.
+
+As this ended up being an unusually long blog post, here's a table containing links to the videos and abstract for contributed talks.  A detailed walk through of the code used to create it can be found below.
+
+As ever, give me a shout [on Twitter](https://twitter.com/nic_crane) if you have any comments or questions!
+
+```{r, echo = FALSE, results = 'asis', error = FALSE, cache = FALSE, message = FALSE, warning=FALSE}
+library(dplyr)
+data = structure(list(talks = c("The future of time series and financial analysis in the tidyverse", 
+"infer: a package for tidy statistical inference", "Tidying up your network analysis with tidygraph and ggraph", 
+"The lesser known stars of the tidyverse", "Creating interactive web graphics suitable for exploratory data analysis", 
+"Open-source solutions for medical marijuana", "Adaptive feedback for learnr tutorials", 
+"tidycf: Turning analysis on its head by turning cashflows on their sides", 
+"Branding and automating your work with R Markdown", "Understanding PCA using Shiny and Stack Overflow data", 
+"Connecting to open source databases", "An assignment operator to unpack vectors and lists", 
+"Developing and deploying large scale shiny applications", "Five packages in five weeks - from boredom to contribution via blogging", 
+"A SAS-to-R success story", "Reinforcement learning in Minecraft with CNTK-R", 
+"Kaggle in the classroom: using R and GitHub to run predictive modeling competitions", 
+"Imagine Boston 2030: Using R-Shiny to keep ourselves accountable and empower the public", 
+"Something old, something new, something borrowed, something blue: Ways to teach data science (and learn it too!)", 
+"Training an army of new data scientists"), authors = c("Davis Vaughan", 
+"Andrew Bray", "Thomas Lin Pedersen", "Emily Robinson", "Carson Sievert", 
+"Carl Ganz", "Daniel Kaplan", "Emily Riederer", "Daniel Hadley", 
+"Julia Silge", "Kirill Muller", "Nathan Teetor", "Herman Sontrop", 
+"Giora Simchoni", "Elizabeth J. Atkinson", "Ali-Kazim Zaidi", 
+"Colin Rundel", "Kayla Patel", "Chester Ismay", "Marco Blume"
+), titles = c("The future of time series and financial analysis in the tidyverse", 
+"infer: a package for tidy statistical inference", "Tidying up your network analysis with tidygraph and ggraph", 
+"The lesser known stars of the tidyverse", "Creating interactive web graphics suitable for exploratory data analysis", 
+"Open-source solutions for medical marijuana", "Adaptive feedback for learnr tutorials", 
+"tidycf: Turning analysis on its head by turning cashflows on their sides", 
+"Branding and automating your work with R Markdown", "Understanding PCA using Shiny and Stack Overflow data", 
+"Connecting to open source databases", "An assignment operator to unpack vectors and lists", 
+"Developing and deploying large scale shiny applications", "Five packages in five weeks – from boredom to contribution via blogging", 
+"A SAS-to-R success story", "Reinforcement learning in Minecraft with CNTK-R", 
+"Kaggle in the classroom: using R and GitHub to run predictive modeling competitions", 
+"Imagine Boston 2030: Using R-Shiny to keep ourselves accountable and empower the public", 
+"Something old, something new, something borrowed, something blue: Ways to teach data science (and learn it too!)", 
+"Training an army of new data scientists"), links = c("https://www.rstudio.com/resources/videos/the-future-of-time-series-and-financial-analysis-in-the-tidyverse/", 
+"http://www.rstudio.com/resources/videos/infer-a-package-for-tidy-statistical-inference/", 
+"https://www.rstudio.com/resources/videos/tidying-up-your-network-analysis-with-tidygraph-and-ggraph/", 
+"https://www.rstudio.com/resources/videos/the-lesser-known-stars-of-the-tidyverse/", 
+"https://www.rstudio.com/resources/videos/creating-interactive-web-graphics-suitable-for-exploratory-data-analysis/", 
+"https://www.rstudio.com/resources/videos/open-source-solutions-for-medical-marijuana/", 
+"https://www.rstudio.com/resources/videos/adaptive-feedback-for-learnr-tutorials/", 
+"http://www.rstudio.com/resources/videos/tidycf-turning-analysis-on-its-head-by-turning-cashflows-on-their-sides/", 
+"https://www.rstudio.com/resources/videos/branding-and-automating-your-work-with-r-markdown/", 
+"https://www.rstudio.com/resources/videos/understanding-pca-using-shiny-and-stack-overflow-data/", 
+"https://www.rstudio.com/resources/videos/connecting-to-open-source-databases/", 
+"https://www.rstudio.com/resources/videos/an-assignment-operator-to-unpack-vectors-and-lists/", 
+"http://www.rstudio.com/resources/videos/developing-and-deploying-large-scale-shiny-applications/", 
+"https://www.rstudio.com/resources/videos/five-packages-in-five-weeks-from-boredom-to-contribution-via-blogging/", 
+"https://www.rstudio.com/resources/videos/a-sas-to-r-success-story/", 
+"https://www.rstudio.com/resources/videos/reinforcement-learning-in-minecraft-with-cntk-r/", 
+"https://www.rstudio.com/resources/videos/kaggle-in-the-classroom-using-r-and-github-to-run-predictive-modeling-competitions/", 
+"https://www.rstudio.com/resources/videos/imagine-boston-2030-using-r-shiny-to-keep-ourselves-accountable-and-empower-the-public/", 
+"https://www.rstudio.com/resources/videos/something-old-something-new-something-borrowed-something-blue-ways-to-teach-data-science-and-learn-it-too/", 
+"https://www.rstudio.com/resources/videos/training-an-army-of-new-data-scientists/"
+)), row.names = c(NA, -20L), class = c("tbl_df", "tbl", "data.frame"
+), .Names = c("talks", "authors", "titles", "links"))
+
+library(DT)
+data %>%
+  mutate(links = paste("<a href='",links,"'>",links,"</a>")) %>%
+  knitr::kable()
+```
+
+
+Here's a walkthrough of the code, and the full list of abstracts.
+
+# Getting Started
+
+I found last year's conference schedule [here] (https://beta.rstudioconnect.com/content/3105/), which seemed as good a place as any to start.  First, I loaded the `rvest` package and used `read_html()` (from `xml2` which is automatically loaded when you load `rvest`) to pull the html from the page.
+
+```{r}
+library(rvest)
+my_html <- read_html("https://beta.rstudioconnect.com/content/3105/")
+my_html
+```
+
+The `my_html` object is an xml document, and to do anything useful with it, I need to work out which components I need.  I could do this manually, but it's much simpler to use [Selector Gadget](https://selectorgadget.com/) to help me.
+
+## Selector Gadget
+
+Selector Gadget is a tool which takes a lot of effort out of webscraping.  For an in-depth description, check out [this rvest vignette](https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html). In short, once Selector Gadget is loaded, I click on any unselected components to pick which ones I need (in green), look at what else is highlighted (in yellow) and then click on these to deselect them (now in red) and carry on selecting and/or deselecting components until only the ones I want are in green or yellow.  
+
+```{r,  out.width = "50%", echo = FALSE}
+knitr::include_graphics("/images/selector_gadget.png") 
+```
+
+Then, I copy the text out of the box, in the case, ".talk-title".  This is the CSS selector needed to grab those components, and I supply this as the `css` argument to `html_nodes()`.  As I just want the inner text, I pipe the result of this into `html_text()`.
+
+```{r}
+talks <- my_html %>%
+  html_nodes(".talk-title") %>%
+  html_text()
+
+head(talks)
+```
+
+I now repear this process to get the presenter names.  Handily, the CSS selector for these is ".presenter"!
+
+```{r}
+authors <- my_html %>%
+  html_nodes(".presenter") %>%
+  html_text()
+
+head(authors)
+```
+
+Now I've got my talks and authors, I'm next going to combine them in a `data_frame`.  Once this is done, I'm also going to tidy them up by removing all the newline characters ("\\n") from the titles.
+
+```{r, eval = FALSE}
+library(dplyr)
+library(stringr) 
+schedule <- data_frame(talks, authors) %>%
+  mutate(talks = str_remove_all(talks, "\n")) %>%
+  distinct()
+
+head(schedule)
+```
+
+```{r, echo = FALSE, error = FALSE}
+library(dplyr)
+library(stringr)
+schedule <- data_frame(talks, authors) %>%
+  mutate(talks = str_remove_all(talks, "\n")) %>%
+  distinct()
+
+head(schedule)
+```
+
+Great!  So now what?  Well, the point of this analysis is to look at the contributed talks, rather than those from invited speakers or RStudio staff, so in the next part of this post, I'm going to be using lots of `dplyr` joins to remove these!
+
+# Finding Only Contributed Talks
+
+Let's start of with identifying talks from invited speakers and RStudio staff.
+
+I found [this post on the RStudio blog](https://blog.rstudio.com/2017/07/12/join-us-at-rstudioconf-2018/) which lists the invited speakers.  I repeat the process from earlier using `rvest` and `xml2` functions to scrape the list of invited speakers.
+
+```{r}
+invited_speakers <- read_html("https://blog.rstudio.com/2017/07/12/join-us-at-rstudioconf-2018/") %>%
+  html_nodes("table:nth-child(6) td:nth-child(1)") %>%
+  html_text()
+
+invited <- data_frame(authors = invited_speakers, Status = "Invited")
+head(invited)
+```
+
+Now I need to combine this back with my original table, `schedule`, so I use `left_join()` from `dplyr` to help me.  
+
+```{r}
+author_tbl <- left_join(schedule, invited, by = "authors") 
+head(author_tbl)
+```
+
+Something you may have noticed is that we have some duplicated rows in the table, and so I use `distinct()` to remove these.
+
+```{r}
+author_tbl <- distinct(author_tbl)
+head(author_tbl)
+```
+Great!  Now I've remove the duplications, let's take a look at how many rows have no value in the `Status` column.  I can use `sum()` and `is.na()` to do this
+
+```{r}
+sum(is.na(author_tbl$Status))
+```
+I still have 51 rows with no value in the `Status` column, but I'm only expecting around 20.  I need to remove talks from RStudio staff to get to my 
+contributed talks.
+
+I did the next bit manually, by searching for any of the individuals I hadn't already heard of.  It's likely that there's a quicker way to do this, using
+the web scraping techniques we've already looked at.  
+
+In no particular order...
+```{r}
+rstudio_staff <- c("Joe Cheng", "Winston Chang", "Alan Dipert", "Sean Lopp",
+                   "Kevin Ushey", "Jonathan McPherson", "Mel Gregory",
+                   "Yihui Xie", "Max Kuhn", "Jenny Bryan", "Jim Hester",
+                   "Joseph Rickert", "Jeff Allen", "Aron Atkins", 
+                   "Barbara Borges Ribeiro", "Nathan Stephens", 
+                   "Mine Cetinkaya-Rundel", "Aaron Berg", "Hadley Wickham",
+                   "Edgar Ruiz", "Amanda Gadrow", "JJ Allaire", "Kevin Kuo",
+                   "Javier Luraschi", "Michael Quinn", "Tareef Kawaf")
+
+rstudio <- data_frame(authors = rstudio_staff, Status = "RStudio")
+head(rstudio)
+```
+
+OK, so this is where it gets a little complicated, so please bear with me.
+
+What I need to do next is combine my list of RStudio people with the `schedule` data_frame.  However, I can't just do a `left_join`:
+
+```{r}
+left_join(author_tbl, rstudio, by = "authors") %>%
+  head()
+```
+Oh no!  The left join has created 2 new columns, `Status.x` and `Status.y`, representing the value of `Status` in the `x` and `y`.
+
+This is because all of the RStudio staff already exist in `author_tbl`, with a `Status` value of `NA`. 
+
+Sad times!  However, a quick trip to Stack Overflow tells me what I need to do: 
+* Note that more efficient solutions may exist! *
+
+1. Extract all of the speakers who are not RStudio staff from `author_tbl` using `anti_join()`.
+
+2. Join my `rstudio` table with my original `schedule` table which does not have a `Status` column, using `left_join()`.  As I removed duplicates after this, I'll have to do it again, using `distinct()`.
+
+3.  Combine the outputs from 1 and 2, using `bind_rows()`.  It looks kinda ugly below as I wanted to do it all in a single pipe.
+
+I've used `tail()` to have a peek at the last 6 rows of the data_frame as I expect the rows for all the RStudio staff to be at the bottom of the table.
+
+```{r}
+author_tbl <- anti_join(author_tbl, rstudio, by = "authors") %>%
+  bind_rows(
+    left_join(rstudio, schedule, by = "authors") %>%
+      distinct()
+  ) 
+
+tail(author_tbl)
+```
+
+Hooray! 
+
+I skim through the data and realise I probably need to add a `Status` value for the keynote speakers. JJ Allaire has already been included in `RStudio`, so it's just Dianne Cook that I need to add.  I use the same technique as before:
+
+```{r}
+keynotes <- data_frame(authors = "Dianne Cook",
+                       Status = "keynote")
+
+author_tbl <- anti_join(author_tbl, keynotes, by = "authors") %>%
+  bind_rows(
+    inner_join(keynotes, schedule, by = "authors") %>%
+      distinct()
+  )
+```
+
+I have a quick look over the data, and remove the discussions and closing remarks from the data using `filter()`.
+
+```{r}
+author_tbl <- author_tbl %>%
+filter(!talks %in% c("R in industry discussion", "Tidyverse discussion", "Closing remarks") )
+```
+
+Finally, I `filter()` again to only show the rows for which the `Status` column contains an `NA`, and drop the now-redundant `Status` column.
+
+```{r}
+contributed_talks <- filter(author_tbl, is.na(Status)) %>%
+  select(-Status)
+
+contributed_talks
+```
+
+I'm now left with around 20 talks, which is the number I expected.  Hooray!
+
+The final step is to get hold of the abstracts.
+
+# Getting the URLs of the Abstracts
+
+The only place I could find the abstracts for the talks was on the individual videos, so there's a final bit of webscraping to do.
+
+Like before, I used `read_html()` to pull the entire page, and then `html_nodes()` and `html_text()` to pull out the text.
+
+```{r}
+video_links <- read_html("https://www.rstudio.com/resources/videos/rstudioconf-2018-talks/")
+
+titles <- video_links %>%
+  html_nodes("#post-15671 a") %>%
+  html_text()
+
+# Get rid of any blank values
+titles <- titles[titles!=""]
+
+head(titles)
+```
+
+I also need the links to the pages where the talks are.  To pull these out, instead of `html_text()`, I used `html_attr()` which extracts everything with a specified attribute, in this case, "href" for the link locations.
+
+As there is duplication I only keep every alternating value.
+
+```{r}
+links <- video_links %>%
+  html_nodes("#post-15671 a") %>%
+  html_attr("href")
+
+links <- links[seq(from = 1, to = length(links), by = 2)]  
+
+head(links)
+```
+
+I then grab the presenter names...
+
+```{r}
+names <- video_links %>%
+  html_nodes("em") %>%
+  html_text()
+
+head(names)
+```
+
+Great!  Now I'm ready to combine my titles, links, and names.  If we look at the first few elements of `names`, `titles` and `links`, we can see that there is an erroneous extra value in `titles` and `links` but not `names` - I must have accidentally picked this up with my selectors from earlier.
+
+
+```{r}
+head(names, 3)
+```
+
+```{r}
+head(titles, 3)
+```
+
+```{r}
+head(links, 3)
+```
+
+To get rid of this, I combine `names` and `titles` in a data_frame and then `slice()` this extra row off before adding the `name` column.
+
+```{r}
+abstract_links <- data_frame(titles, links) %>%
+  slice(-1) %>%
+  mutate(name = names)
+
+head(abstract_links)
+```
+
+Awesome, I have my table of URLs, talks, and authors.  Let's join that with my table of contributed talks.
+
+```{r}
+left_join(contributed_talks, abstract_links, by = c("authors" = "name"))
+```
+
+There are a couple of talks missing URLS and further inspection reveals that this is due to a missing middle name and a missing umlaut, so I make a couple of manual adjustments using `case_when()` and redo my join.
+
+```{r}
+talks_and_urls <- contributed_talks %>%
+mutate(
+  authors = case_when(
+    authors == "Ali Zaidi" ~ "Ali-Kazim Zaidi",
+    authors == "Kirill Müller" ~ "Kirill Muller",
+    TRUE ~ authors
+  )
+) %>%
+  left_join(abstract_links, by = c("authors" = "name"))
+
+talks_and_urls
+```
+
+And it's worked! But what I want is the actual abstract text, which is what I'll be doing in the next section.
+
+# Scraping the Abstracts
+
+In order to scrape the abstracts from the table of talks and URLs, I need to:
+
+1. Read each URL
+2. Use the relevant selector to pull out just the abstract text nodes
+3. Use `html_text()` to pull just the text out of each node.
+
+I've done this a few times already, so it should be simple case of chucking this all into an `lapply()`, right?  Well, not quite...
+
+```{r, error = TRUE}
+abstracts <- lapply(talks_and_urls$links, function(i){
+  read_html(i) %>%
+  html_nodes(".2_3 p") %>%
+  html_text()
+})
+```
+
+I quickly get an error.  I'm not sure of the source of this, but a remedy here is to use XPath instead of CSS (easily acquired from Selector Gadget) to specify
+ the components I want:
+
+```{r, cache=TRUE}
+abstracts <- lapply(talks_and_urls$links, function(i){
+  read_html(i) %>%
+  html_nodes(xpath='//*[contains(concat( " ", @class, " " ), concat( " ", "2_3", " " ))]//p') %>%
+  html_text()
+})
+
+tail(abstracts, 3)
+```
+
+This takes a while as there are a lof of asbtracts to pull, but once it's done, it's looking good.  This object is a list, each element containing a character vector of length 1 or more for each abstract.  I want to make sure they're all only 1 item long, so use `vapply()` to `paste()` the contents of each abstract into a single character object.
+
+```{r}
+abstracts <- vapply(abstracts, function(abstract){
+  paste(abstract, collapse = "  ")
+}, character(1))
+```
+
+Finally, I append the abstracts column onto my `talks_and_urls` table.  I've not displayed it here, as the result is huge on the page.
+
+```{r}
+talks_and_urls$abstracts = abstracts
+```
+
+So here we have it, the full list of abstracts.  I'm not 100% sure it's accurate, as 
+[this post](https://blog.rstudio.com/2017/11/06/rstudio-conf-2018-program/) on the RStudio blog suggests different numbers of people for each status.  My best guess is that couple of people I have down as delivering "contributed" talks were actually invited speakers who were invited after the publication of this blog post.
+
+```{r echo = FALSE}
+# TODO: 
+# 
+#   * Get accurate list of contributed etc here: https://blog.rstudio.com/2017/11/06/rstudio-conf-2018-program/
+#   * 
+#   * 
+# 
+# eposter_2018_html <- read_html("https://www.rstudio.com/rstudio-conf-e-poster-sessions/")
+# 
+# abstracts <- eposter_2018_html %>%
+#   html_nodes("td:nth-child(4)") %>%
+#   html_text()
+# 
+# titles <- eposter_2018_html %>%
+#   html_nodes("td:nth-child(3)") %>%
+#   html_text()
+# 
+# prev_posters <- data_frame(abstracts, titles) 
+
+
+# 15 talks and 20 e-posters
+# 
+# We are particularly interested in submissions that have one or more of these qualities:
+
+# Showcase the use of R and RStudio’s tools to solve real problems.
+# Expand the tidyverse to reach new domains and audiences.
+# Combine R with other world class tools, like python, tensorflow, and spark.
+# Communicate using R, whether it’s building on top of RMarkdown, Shiny, ggplot2, or something else altogether.
+# Discuss how to teach R effectively.
+# 
+# Applications close Sept 15, and you’ll be notified of our decision on Oct 1.
+# 
+# 1. Speaking Skills
+# 2. 3 URLS with info about you/your project
+# 
+# https://github.com/rstudio-education/teach-the-tidyverse
+# 
+```

@@ -1,0 +1,129 @@
+---
+title: How do I make my own dplyr-style functions?
+author: Nic Crane
+date: '2018-04-16'
+slug: how-do-i-make-my-own-dplyr-style-functions
+categories: []
+tags:
+  - dplyr
+  - tidyeval
+  - tidyverse
+  - R
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+
+suppressMessages(library(dplyr))
+suppressWarnings(library(rlang))
+```
+
+In this series of blog posts introducing tidy eval, we've been looking at [why tidy eval is important](https://thisisnic.github.io/2018/03/29/what-is-tidy-eval-and-why-should-i-care/), and terms like ["quotation" and "quasiquotation"](https://thisisnic.github.io/2018/03/31/what-the-heck-is-quasiquotation/).
+
+The next step is to look at how we can write our own dplyr-style functions in R.
+
+This post will look at the following terms and functions:
+
+* quosures
+* `quo()`
+* `enquo()`
+
+
+## What is a quosure?
+
+Quosures are a topic which come up frequently when talking about tidy eval.  But what is a quosure?  From [here](https://www.rdocumentation.org/packages/rlang/versions/0.1.6/topics/quosure)
+
+>> Quosures are quoted expressions that keep track of an environment
+
+On it's own, this definition is a little abstract.  We can guess from its name that the term "quosure" is related to "closure", meaning a function which keeps track of its parent environment, but in the case of "quosure", we're referring specifically to quoted expressions instead of functions.
+
+In order to give it a little more context, let's look at an example of where you might need to use a quosure.
+
+## Using dplyr Inside Custom Functions
+
+In a number of previous posts, we looked at how we can use `sym()` and `!!` to help us work with *dplyr* functions when called inside our own functions.  As a recap, here's an example of a function, `wrangle_data()`, which selects a column specified by the user, filters based on a user-supplied value, and then returns the first 6 lines of the resulting dataset:
+
+```{r}
+library(dplyr)
+library(rlang)
+
+wrangle_data <- function(x, col_name, val){
+  
+  one_col <- select(x, !!sym(col_name))
+  filtered <- filter(one_col, !!sym(col_name) == val)
+  head(filtered)
+}
+
+wrangle_data(iris, "Species", "versicolor")
+```
+
+This works fine, although you may notice that the syntax is a little different to if you were to use *dplyr* functions directly; for example, when we use `select()` to return specified columns, we don't need to put the column names in quotes.
+
+```{r}
+select(iris, Species) %>%
+  head()
+```
+
+So, how can we write our own functions that work in the same way?
+
+## Capturing User Input
+
+Let's take a quick look at what happens if we try to call our function without putting quote marks around the column name.
+
+```{r}
+wrangle_data(iris, Species, "versicolor")
+```
+
+We get an error message.  This is because R is trying to find an object named `Species`, but no object with this name exists.  We need some way of capturing the expression that the user has input and evaluating it in the correct context.
+
+### Quosures: quo() and enquo()
+
+This brings is back to our earlier definition of quosures:
+
+>> Quosures are quoted expressions that keep track of an environment
+
+We might try using `quo()` to create a quosure.  Note that we have also removed the call to `sym()`.
+
+```{r}
+wrangle_data <- function(x, col_name, val){
+  
+  col_name <- quo(col_name)
+  
+  one_col <- select(x, !!col_name)
+  filtered <- filter(one_col, !!col_name == val)
+  head(filtered)
+}
+
+wrangle_data(iris, Species, "versicolor")
+
+```
+
+This is almost correct, but not quote there!  To make this function run, we need to use `enquo()`.
+
+```{r}
+wrangle_data <- function(x, col_name, val){
+  
+  col_name <- enquo(col_name)
+  
+  one_col <- select(x, !!col_name)
+  filtered <- filter(one_col, !!col_name == val)
+  head(filtered)
+}
+
+wrangle_data(iris, Species, "versicolor")
+
+```
+
+So what is the difference between `quo()` and `enquo()` then?
+
+### Comparing quo() and enquo()
+
+When we call `quo()` on an expression, it takes that expression and wraps it in a quosure, in this case, returning `col_name` as a quosure.  However, what we actually wanted to do was return `Species` as a quosure, and this extra step can be performed by using `enquo()` instead.
+
+From [the programming vignette from dplyr](https://dplyr.tidyverse.org/articles/programming.html):
+
+>> enquo() uses some dark magic to look at the argument, see what the user typed, and return that value as a quosure. 
+
+To look at it another way, if we wanted to turn a variable we supplied ourself into a quosure, we'd probably use `quo()`, but if it's one supplied by the user, then we should use `enquo()`.
+
+To conclude, `enquo()` is crucial if we wish to create our own *dplyr* style functions which capture user input.  Any feedback on this post is welcome [via Twitter](https://twitter.com/nic_crane/status/985767823157923842).
