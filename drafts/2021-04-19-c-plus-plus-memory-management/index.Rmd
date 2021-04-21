@@ -1,0 +1,82 @@
+---
+title: C++ Memory Management
+author: ''
+date: '2021-04-19'
+slug: c-plus-plus-memory-management
+categories:
+  - C++
+tags: []
+---
+
+**** This is heavily copied from accelerating C++ course and will need sigifnicant changes before publishign!!!****
+
+## Namespaces
+Similarly to in R, we can use `::` to specify a namespace.  We can also import entities, e.g. `using my_namespace::symbol` or `using namespace my_namespace`.
+
+## Type inference
+Type inference means you can declare a variable as `auto`, e.g. `auto my_var = 404` would declare the variable `my_var` and it'd be inferred that it is an int.
+
+## Creating pointers
+
+### What is a pointer?
+
+A pointers is an address of a variable, e.g. `float *n;` is a pointer to a float.  Pointers have no defaults and are either initialised to an address of an existing variable, e.g. `float *n = &u;` to set it to the address of variable `u`, or they can be initialised with `nullptr` which is a special literal used to indicate that the pointer doesn't point anywhere.
+
+You can have pointers to pointers!
+
+### Dereferencing the pointer
+
+If we run `float f = *n;` then putting the asterisk in front of the pointer retrieves its value.  There is special syntax for struct and class members which are pointers.
+
+### Creating a pointer
+
+If we wanted to make a pointer to this variable, we could then run `auto* pm = &meaning;`.  Here, `meaning` is a variable, and by prefixing it with `&`, we get the address of that variable.  That address gets written to a variable called `pm`.  We use `auto` to infer the type (int) but have included an asterisk next to it to declare it as a pointer as that cannot be inferred.
+
+## Creating references
+
+### What is a reference
+A reference is a construct which is similar to a pointer but simple syntax.  It works of variable types.
+
+`int &x = y;`
+Here, x is a reference to y, so when you change x, you change y.
+
+There is no additional operator to access the actual value, e.g. `calculate(x)` and `x=123;`.  There is no such thing as a null reference unlike null pointers.
+
+You can get a reference to a pointer and get a reference to that pointer, e.g. `int *n; int &m = *n'`.  However, pointer to reference is illegal.
+
+### Example
+
+We can define a function that increments a number, e.g. `void increment(int& a) {a++;}`.  If we later declare `int n = 10;` and then call `increment(n)`, if we later inspect `n`, we'll see that the value is now 11.
+
+###
+
+If we wanted to make a reference, we could run `auto& rm = meaning;`
+
+Literal == value you've literally written in your code rather than inferred via function, e.g. in `auto my_var = 404;`, 404 is a literal.
+
+## Functions
+
+An alternative function syntax uses the `->` to assign the body of the function to the name.
+
+### const
+
+The `const` keyword prevents the value of a variable from being modified and marks it as read-only.  It can be used to show that a function doesn't modify the value of a parameter in any way.
+
+## Stack vs. heap
+
+In C++ there are 2 ways of allocating something: the heap and the stack.
+
+The memory is divided into the stack, the heap, and some special areas for things like global variables.
+
+Stack variables are cleaned up when you exit the scope.  The stack size is limited - if you have anything large you need to store, you should store it in the heap.
+
+The heap is also known as the free store.  
+
+There is a difference in syntax used to declare variables on the stack vs. heap.
+
+* stack: `std::string s("hello");`
+* help: `std::string* t = new std::string("world");`
+
+The `new` keyword results in allocation on the heap. This results in returning a pointer.  The variable and the pointer to it are not deallocated when you leave the scope.
+
+To deallocated it, you use the `delete` keyword, e.g. `delete t;`.  

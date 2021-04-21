@@ -1,0 +1,133 @@
+---
+title: "Pointers and References"
+author: ''
+date: '2021-04-19'
+slug: pointers-and-references
+categories: []
+tags: []
+---
+
+# Pointers
+
+## What is a pointer?
+
+A pointer is a variable that contains a memory address for a value.
+
+If you pass a pointer into a function, you get a copy of that pointer (so it points to the same address).
+
+If you then change the value of the copy inside of the function, it affects whatever is at the address that the pointer is pointing at.
+
+You could point the pointer to different things, and when you dereference it, it will return the value of whatever is at the address is is pointed at.
+
+## How do I declare a pointer?
+
+You can declare a pointer by putting an asterisk between the type declaration and the variable name.
+
+```{Rcpp, eval = FALSE}
+int *myPointer;
+```
+
+# References
+
+## What is a reference?
+
+A reference points to a variable, it's like a label. You can't move references, they stay referring to the same variable/location in memory.
+
+## How do I declare a reference?
+
+You can declare a reference by putting an ampersand between the type declaration and the variable name.
+
+```{Rcpp, eval = FALSE}
+int &myRef = someVar;
+```
+
+# Pointer references
+
+If you pass by pointer reference (e.g. `void my_func(int * & pRef)) pRef = 10`, then you pass in a reference to the pointer.  You don't make a copy; you're adding an alternative name to the original pointer.
+
+Therefore if you change the value of `pRef`, you change the value of anything else that is pointing at that address.
+
+# Examples
+
+This example is from the video [here](https://www.youtube.com/watch?v=UWYnUGnChhA).
+
+```{Rcpp, eval = FALSE}
+#include <stdio.h>
+
+// we pass in a copy of the integer into the function
+void passByVal(int val);
+
+// pass by reference
+// doesn't matter if the ampersand is touching in or val
+// passes in the actual variable
+void passByRef(int & ref);
+
+// pass in the pointer
+// same as above with position of asterisk
+void passByPtr(int * ptr);
+
+int main(){
+    int x = 5;
+    printf("x = %i\n", x); // 5
+    passByVal(x); // prints val = 10
+
+    printf("x = %i\n", x); // 5
+    passByRef(x); // prints ref = 20
+
+    printf("x = %i\n", x); // 20
+
+    // Similar to pass by pointer - also differs from pass by pointer reference
+    // this is an integer pointer, xptr, which points to x
+    // pointers hold adresses
+    int* xptr = &x;
+    printf("x = %i\n", x); // 20
+    // print the derferenced value of xptr, i.e. we don't want to print the pointer itself, but the
+    // value of thing it's pointing to
+    printf("*xptr = %i\n", *xptr); // 20
+
+    passByPtr(xptr); // prints *ptr = 30
+
+    printf("x = %i\n", x); // 30
+    printf("*xptr = %i\n", *xptr); // 30
+
+    return 0;
+}
+
+// This function passes in a copy of val, so when we modify the value of val in the function body, we can work 
+// with the modified version, but later references to val in other functions work with the original.
+void passByVal(int val){
+    val = 10;
+    // %i = val
+    printf("val = %i\n", val);
+}
+
+// This function passes in a reference to 'ref' which means that when we set the value of ref to 20 here, later
+// code which works with ref now shows it having a value of 20.
+void passByRef(int & ref){
+    ref = 20;
+    printf("ref = %i\n", ref);
+}
+
+// Very similar to passing by reference but the syntax is a little different.  
+void passByPtr(int * ptr){
+    // look at the value of ptr
+    *ptr = 30;
+    printf("*ptr = %i\n", *ptr);
+}
+
+```
+
+# What is `std::sharedptr`?
+
+In the examples above, we discuss raw pointers.  They are [discouraged in Modern C++](https://docs.microsoft.com/en-us/cpp/cpp/pointers-cpp?view=msvc-160) due to the need for manual deletion and memory management.  An alternative to raw pointers is _smart pointers_.  
+
+## Smart pointers
+
+Smart pointers are a modern version of pointers which is a class template and allows memory management to be done via C++ scoping rather than needing to be done manually.
+
+They can be declared using `std::uniqueptr`, `std::sharedptr`, and `std::weakptr`.
+
+A `sharedptr` is a smart pointer which can be managed by multiple sources.  You should use `make_shared` to create it.
+
+# What is `nullptr`?
+
