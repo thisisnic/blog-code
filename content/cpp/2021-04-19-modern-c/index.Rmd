@@ -1,0 +1,23 @@
+---
+title: Modern C++
+author: ''
+date: '2021-04-19'
+slug: modern-c
+categories:
+  - C++
+tags: []
+---
+
+When people use the phrase "modern C++", they're usually referring to C++ 11 onwards.  
+
+# Libraries
+
+The main libraries in C++ are:
+
+1. The C++ standard library
+2. Standard Template Library (contains things like algorithms, iterators, etc)
+3. Boost (some really great stuff in here; some of it is moving into the standard library)
+4. QT framework (for cross-platform UI)
+5. Intel libraries
+6. (lots of others!)
+
