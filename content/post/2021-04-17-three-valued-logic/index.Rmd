@@ -1,5 +1,5 @@
 ---
-title: Three Valued Logic
+title: "Three Valued Logic"
 author: ''
 date: '2021-04-17'
 slug: three-valued-logic
@@ -32,12 +32,14 @@ I don't think this is overly complex when using these functions, though it makes
 
 I drew this out as a simple flowchart to make sure I had it right, and this is the logic inside it:
 
-In the case of `any`:
+#### In the case of `any`:
 1. Can you say that the condition has been met?  If yes, return TRUE.  If no, go to next step.
 2. Are there are missing values? If no, return FALSE.  If yes, return NA.
 
-And in the case of `all`:
+#### And in the case of `all`:
 1. Can you say that the condition has been met?  If no, return FALSE.  If yes from the non-missing values (so more like "maybe"!), go to next step.
 2. Are there are missing values? If no, return TRUE  If yes, return NA.
+
+![](images/three_valued_logic.jpeg){width=25%}
 
 Now I write it out, it doesn't seem overly complex, but it was pretty interesting encountering it for the first time.  This concept also exists in SQL and I'm surprised I've not come across it before. 
