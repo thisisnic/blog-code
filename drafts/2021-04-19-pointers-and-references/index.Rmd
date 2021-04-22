@@ -129,5 +129,4 @@ They can be declared using `std::uniqueptr`, `std::sharedptr`, and `std::weakptr
 
 A `sharedptr` is a smart pointer which can be managed by multiple sources.  You should use `make_shared` to create it.
 
-# What is `nullptr`?
 
