@@ -6,9 +6,7 @@ slug: using-tidy-eval-with-dplyr-filter
 tags:
 - dplyr
 - tidyeval
-- R
 categories: 
-  - Code
   - R
 ---
 

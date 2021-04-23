@@ -3,12 +3,11 @@ title: How do I make my own dplyr-style functions?
 author: Nic Crane
 date: '2018-04-16'
 slug: how-do-i-make-my-own-dplyr-style-functions
-categories: []
+categories: ['R']
 tags:
   - dplyr
   - tidyeval
   - tidyverse
-  - R
 ---
 
 ```{r, echo = FALSE}

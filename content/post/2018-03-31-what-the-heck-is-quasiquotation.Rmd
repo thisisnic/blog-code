@@ -4,10 +4,8 @@ author: Nic Crane
 date: '2018-03-31'
 slug: what-the-heck-is-quasiquotation
 categories:
-  - Code
   - R
 tags:
-  - R
   - dplyr
   - tidyeval
   - tidyverse

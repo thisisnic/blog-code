@@ -9,7 +9,6 @@ tags:
   - tidyeval
   - dplyr
   - tidyverse
-  - R
 ---
 
 I'm going to begin this post somewhat backwards, and start with the conclusion: tidy eval is important to anyone who writes R functions and uses dplyr and/or tidyr.

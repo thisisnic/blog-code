@@ -1,15 +1,12 @@
 ---
-title: Iterating with names
+title: 'Iterating with names'
 author: ''
 date: '2018-12-19'
 slug: iterating-with-names
-categories:
-  - R
-  - Code
-tags:
-  - R
-  - purrr
-  - tidyverse
+categories: [
+  'R'
+]
+tags: ['tidyverse', 'purrr']
 type: post
 ---
 

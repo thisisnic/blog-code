@@ -3,8 +3,8 @@ title: Ten Steps to Becoming a Tidyverse Contributor
 author: ''
 date: '2018-11-28'
 slug: ten-steps-to-becoming-a-tidyverse-contributor
-categories: []
-tags: []
+categories: ['R']
+tags: ['contributing to open source', 'tidyverse']
 ---
 
 This year has been a crazy whirlwind for me – I moved job once, moved house 3 times, [co-authored a course on Data Camp](https://www.datacamp.com/courses/developing-r-packages), got invited by a former colleague to assist with a workshop at rstudio::conf 2019, was accepted to present at the very same conference, and became a [minor contributor to the tidyverse](https://github.com/tidymodels/broom/pull/486).  In this blog post I’ll talk about  reasons for contributing and then walk through the steps I took to help guide others.

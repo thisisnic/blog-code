@@ -5,7 +5,7 @@ date: '2021-04-19'
 slug: what-is-const
 categories:
   - C++
-tags: []
+tags: ['C++']
 ---
 
 `const` is a keyword we use to define constants; variables which are not changed after their creation.

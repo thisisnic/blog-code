@@ -4,12 +4,10 @@ author: Nic Crane
 date: '2018-02-20'
 slug: exploring-tidy-eval-snails-pace
 categories:
-  - Code
   - R
 tags:
   - dplyr
   - tidyeval
-  - R
 ---
 
 I recently attended rstudio::conf, with my favourite talks being those which taught me new things that I am going to use in my day-to-day work.  I attended and enjoyed Hadley Wickham's talk, 'Tidy eval: programming with dplyr, tidyr, and ggplot2', although got sidetracked trying to keep up typing whilst listening.  
@@ -19,7 +17,7 @@ When I'm delivering training courses, this is the one thing I advise all attende
 Anyway, Hadley's talk covered lots of important background information about tidy eval, but I'm still finding a lot of it pretty unintuitive, so I thought I'd explore the aspects of tidy eval that I come across in my day-to-day work, at a snail's pace, in the hope that it'll start making sense.
 
 ```{r,  out.width = "50%", echo = FALSE}
-knitr::include_graphics("/images/pallida.jpg") 
+knitr::include_graphics("./images/pallida.jpg") 
 ```
 
 The example I'm going to use in this post is the iris dataset.  I've yet to meet someone who has been learning R for a while who isn't sick of this dataset by now, but for the sake of completeness, let's take a quick look at the first few lines now.

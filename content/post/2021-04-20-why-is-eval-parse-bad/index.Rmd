@@ -3,7 +3,9 @@ title: "Why is eval parse bad?"
 author: ''
 date: '2021-04-20'
 slug: why-is-eval-parse-bad
-categories: []
+categories: [
+  'R'
+]
 tags: ['tidyeval', 'arrow']
 ---
 

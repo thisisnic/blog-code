@@ -6,7 +6,7 @@ slug: what-is-sexp
 categories:
   - C++
   - R
-tags: []
+tags: ['C++']
 ---
 
 `SEXP` is short for S Expression.  It is the C struct used to represent every type of object in R.  C functions that talk to R must used the SEXP type for both inputs and outputs.

@@ -5,7 +5,7 @@ date: '2021-04-19'
 slug: modern-c
 categories:
   - C++
-tags: []
+tags: ['C++']
 ---
 
 When people use the phrase "modern C++", they're usually referring to C++ 11 onwards.  

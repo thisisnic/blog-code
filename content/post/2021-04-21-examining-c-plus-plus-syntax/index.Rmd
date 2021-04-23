@@ -3,8 +3,9 @@ title: "Examining C++ syntax - RecordBatch::SelectColumns"
 author: ''
 date: '2021-04-21'
 slug: examining-c-plus-plus-syntax-recordbatch-selectcolumns
-categories: C++
-tags: []
+categories: 
+  - C++
+tags: ['C++']
 ---
 
 I'm approaching learning C++ by taking both a top-down and bottom-up approach, looking at tutorials and learning the basics whilst also working with existing C++ code in the Arrow codebase.
@@ -51,7 +52,7 @@ There are two subsequent declarations; `FieldVector fields(n);` and `ArrayVector
 
 Next, we have the for loop.  It loops through each of the supplied indices, and appends both fields and columns with the field or column at that position in the original RecordBatch object.  An interesting bit of syntax there is `schema()->field(pos);`.  This actually means call the `schema()` method on the current object (the supplied RecordBatch) and then call its `field()` method passing in the value of `pos`.  Here, the `->` syntax is used to call the method rather than `.` is because the object is a pointer.
 
-Once those variables have been assigned their values, we begin to assemble a new RecordBatch.  First, we begin with creating a new Schema from their values: `auto new_schema =      std::make_shared<arrow::Schema>(std::move(fields), schema()->metadata());`
+Once those variables have been assigned their values, we begin to assemble a new RecordBatch.  First, we begin with creating a new Schema from their values: `auto new_schema = std::make_shared<arrow::Schema>(std::move(fields), schema()->metadata());`
 
 Schema here has its type inferred automatically via the `auto` keyword.  The code `std::make_shared` is used to make a new shared pointer to the Schema object.  `std::move` is used so that the actual objects themselves are moved rather than creating a copy when passing into the function call.  When an object will not be used afterwards, you can move it when passing it to another function, which can spare a copy. For the most simple types, copies are costless so we don't bother (no need to move an int for example). But, typically, copies are expensive for strings, vectors and larger objects.
 

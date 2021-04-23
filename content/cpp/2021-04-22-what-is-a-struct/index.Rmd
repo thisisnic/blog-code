@@ -5,7 +5,7 @@ date: '2021-04-22'
 slug: what-is-a-struct
 categories:
   - C++
-tags: []
+tags: ['C++']
 ---
 
 A `struct`, short for structure, is similar to an R list in that it can be used to contain multiple objects of different types.

@@ -4,7 +4,7 @@ author: Nic Crane
 date: '2016-04-28'
 slug: getting-started-with-leaflet-in-shiny-interactive-map-apps
 categories:
-  - Code
+  - R
 tags:
   - shiny
   - leaflet
@@ -13,7 +13,6 @@ tags:
 Lately I've been enjoying learning how to use [Shiny](http://www.shinyapps.io/), and experimenting with making a [fairly basic app](https://thisisnic.shinyapps.io/anscombe/), and wanted to develop my skills further.  I'd been looking at an example app from the Shiny website which shows [live bus locations](http://shiny.rstudio.com/gallery/bus-dashboard.html) in the US, refreshing at short intervals.  It looked fairly complex at first, so I was pretty happy when, within 48 hours I'd managed to recreate [something of similar complexity](https://thisisnic.shinyapps.io/London-Income-Map/), so here's your guide on how you can quickly get up to speed using interactive reactive maps in Shiny.
 
 ```{r,  out.width = "50%", echo = FALSE}
-print(getwd())
 knitr::include_graphics("./images/london_income_map.png") 
 ```
 
@@ -31,12 +30,9 @@ Here I'm presuming you already have a reasonable working knowledge of Shiny, and
 # Step 1: really get to know the bus dashboard example
 
 ```{r,  out.width = "50%", echo = FALSE}
-#knitr::include_graphics("/images/bus_dashboard.png") 
+knitr::include_graphics("./images/bus_dashboard.png") 
 ```
 
-![](/post/images/2016-04-28-getting-started-with-leaflet-in-shiny-interactive-map-apps_files/bus_dashboard.png)
-
-    
 
 The bus dashboard example can be downloaded here.  After playing around with the app in a browser, I printed out all of the code and annotated it with a few different colour pens.  I went back and forth, writing notes and drawing diagrams until I understood what all the different components did and how they interacted with each other.  This took a few hours, but the time invested was well worth it, as the design of the components of my app later felt pretty easy despite my lack of experience in making complex apps.
 
@@ -59,7 +55,7 @@ Again, I went to the London Datastore, but this time I downloaded data on the av
 # Step 6: code!
 
 ```{r,  out.width = "50%", echo = FALSE}
-knitr::include_graphics("/images/code.png") 
+knitr::include_graphics("./images/code.png") 
 ```
 
 
