@@ -6,7 +6,16 @@
     <description>Recent content in R on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What is SEXP?</title>
+      <link>/cpp/what-is-sexp/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/cpp/what-is-sexp/</guid>
+      <description>SEXP is short for S Expression. It is the C struct used to represent every type of object in R. C functions that talk to R must used the SEXP type for both inputs and outputs.</description>
+    </item>
+    
     <item>
       <title>Iterating with names</title>
       <link>/2018/12/19/iterating-with-names/</link>

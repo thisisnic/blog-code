@@ -6,7 +6,56 @@
     <description>Recent content in Home on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Examining C&#43;&#43; syntax - RecordBatch::SelectColumns</title>
+      <link>/cpp/examining-c-plus-plus-syntax-recordbatch-selectcolumns/</link>
+      <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/cpp/examining-c-plus-plus-syntax-recordbatch-selectcolumns/</guid>
+      <description>I’m approaching learning C++ by taking both a top-down and bottom-up approach, looking at tutorials and learning the basics whilst also working with existing C++ code in the Arrow codebase.
+I wanted to take a snippet of code from something that I’ve been working on an enhance my understanding of it. I posted this on Slack, and my colleagues were generous with their time and knowledge, helping me check my understanding, which I’m now going to outline below.</description>
+    </item>
+    
+    <item>
+      <title>Why is eval parse bad?</title>
+      <link>/2021/04/20/why-is-eval-parse-bad/</link>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/04/20/why-is-eval-parse-bad/</guid>
+      <description>I was writing Arrow bindings for na.omit and needed a way of applying is.na to every column of a table at once. I’d originally implemented using dplyr::filter, but had failed to realise that Arrow only suggests dplyr but doesn’t import it, and so needed to refactor it.
+Table objects in Arrow have a Filter method, and I knew that a naive implementation would be a for loop which iteratively called Table$Filter(!</description>
+    </item>
+    
+    <item>
+      <title>Modern C&#43;&#43;</title>
+      <link>/cpp/modern-c/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/cpp/modern-c/</guid>
+      <description>  When people use the phrase “modern C++”, they’re usually referring to C++ 11 onwards.
+Libraries The main libraries in C++ are:
+The C++ standard library Standard Template Library (contains things like algorithms, iterators, etc) Boost (some really great stuff in here; some of it is moving into the standard library) QT framework (for cross-platform UI) Intel libraries (lots of others!)   </description>
+    </item>
+    
+    <item>
+      <title>What is const?</title>
+      <link>/cpp/what-is-const/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/cpp/what-is-const/</guid>
+      <description>const is a keyword we use to define constants; variables which are not changed after their creation.</description>
+    </item>
+    
+    <item>
+      <title>What is SEXP?</title>
+      <link>/cpp/what-is-sexp/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/cpp/what-is-sexp/</guid>
+      <description>SEXP is short for S Expression. It is the C struct used to represent every type of object in R. C functions that talk to R must used the SEXP type for both inputs and outputs.</description>
+    </item>
+    
     <item>
       <title>UseR!2019: A Shiny Perspective</title>
       <link>/2019/07/28/user-2019/</link>
