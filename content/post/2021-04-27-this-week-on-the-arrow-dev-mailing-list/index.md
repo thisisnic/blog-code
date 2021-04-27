@@ -33,7 +33,7 @@ Random number generation was slow on ARM64, with significant differences between
 
 ## Rest parquet2
 
-Experimenting with re-writing the Rust parquet implementation which doesn't use "unsafe" (keyword used to allow functionality that doesn't guarantee memory safety), improving performance, and other things.  There is discussion of moving their implementation to an official Apache repo and people suggest how to go about it.
+One contributor has been experimenting with re-writing the Rust parquet implementation which doesn't use "unsafe" (keyword used to allow functionality that doesn't guarantee memory safety), improving performance, and other things.  There is discussion of moving their implementation to an official Apache repo and people suggest how to go about it.
 
 ## Python-datafusion
 Discussion around adding python-datafusion into the project.  Python-datafusion allows the use of Datafusion from Python.  Questions are asked around whether the plan is to move it into the monorepo or kept as a separate apache repo, and the author suggests at least doing releases separately so it can have independent versioning from pyarrow and not automatically bundle it with pyarrow.
