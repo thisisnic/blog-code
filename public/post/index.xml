@@ -6,7 +6,38 @@
     <description>Recent content in Posts on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Definitions #1</title>
+      <link>/2021/04/27/definitions-1/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/04/27/definitions-1/</guid>
+      <description>This post contains answers to a number of questions I had when reading through the Apache Arrow dev mailing list. In future posts I&amp;rsquo;ll look up how to properly use footnotes in markdown!
+What is DataFusion?  DataFusion is an attempt at building a modern distributed compute platform in Rust, leveraging Apache Arrow as the memory model.
+ What is Ballista?  Ballista is a distributed compute platform primarily implemented in Rust, powered by Apache Arrow.</description>
+    </item>
+    
+    <item>
+      <title>This Week on the Arrow Dev Mailing List</title>
+      <link>/2021/04/27/this-week-on-the-arrow-dev-mailing-list/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/04/27/this-week-on-the-arrow-dev-mailing-list/</guid>
+      <description>Inspired by &amp;ldquo;This Week in Ballista&amp;rdquo;, and my desire to keep up-to-date with everything happening in Arrow, here&amp;rsquo;s my first &amp;ldquo;This Week in Arrow&amp;rdquo;, summarising the main occurrences on the dev mailing list from 20th - 27th April 2021.
+Release candidate 1 There were votes on a few release candidates. RC1 was blocked due to a number of issues. There was an update which changed the default memory pool to prefer mimalloc instead of jemalloc on MacOs, as this had been shown to lead to better peformance on macOS.</description>
+    </item>
+    
+    <item>
+      <title>Examining C&#43;&#43; syntax - RecordBatch::SelectColumns</title>
+      <link>/2021/04/21/examining-c-plus-plus-syntax-recordbatch-selectcolumns/</link>
+      <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/04/21/examining-c-plus-plus-syntax-recordbatch-selectcolumns/</guid>
+      <description>I’m approaching learning C++ by taking both a top-down and bottom-up approach, looking at tutorials and learning the basics whilst also working with existing C++ code in the Arrow codebase.
+I wanted to take a snippet of code from something that I’ve been working on an enhance my understanding of it. I posted this on Slack, and my colleagues were generous with their time and knowledge, helping me check my understanding, which I’m now going to outline below.</description>
+    </item>
+    
     <item>
       <title>Why is eval parse bad?</title>
       <link>/2021/04/20/why-is-eval-parse-bad/</link>
@@ -18,12 +49,23 @@ Table objects in Arrow have a Filter method, and I knew that a naive implementat
     </item>
     
     <item>
+      <title>Three Valued Logic</title>
+      <link>/2021/04/17/three-valued-logic/</link>
+      <pubDate>Sat, 17 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/04/17/three-valued-logic/</guid>
+      <description>This week I was writing Arrow bindings for some R functions and came across a concept that was new to me: three-valued logic.
+I encountered this when working out the expected behaviour of the functions any and all which are used for aggregation of boolean/logical values.
+If I have a vector without any NA values, the behaviour of these functions is pretty straightforward. In the example below, vec &amp;gt; 3 evaluates to FALSE FALSE FALSE TRUE TRUE and so a call to any() results in TRUE and a call to all() results in FALSE.</description>
+    </item>
+    
+    <item>
       <title>UseR!2019: A Shiny Perspective</title>
       <link>/2019/07/28/user-2019/</link>
       <pubDate>Sun, 28 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>/2019/07/28/user-2019/</guid>
-      <description>UseR!2019UseR!2019 was a fantastic conference. I’ve previously attended RStudio Conference and EARL, both of which are very different conferences. I’ve enjoyed all three, and especially like how they each bring something different to the R conference playing field.
+      <description>UseR!2019 UseR!2019 was a fantastic conference. I’ve previously attended RStudio Conference and EARL, both of which are very different conferences. I’ve enjoyed all three, and especially like how they each bring something different to the R conference playing field.
 I mainly work in Shiny, and so most of this post will be including some of my Shiny-focussed highlights, with a few other special mentions.
 The conference kicked off with a Tidyverse Developer Day, organised by RStudio.</description>
     </item>
@@ -34,8 +76,8 @@ The conference kicked off with a Tidyverse Developer Day, organised by RStudio.<
       <pubDate>Wed, 19 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/12/19/iterating-with-names/</guid>
-      <description>The ProblemI’ve come across this problem a few times lately, when I’ve wanted to iterate through some sort of named list or vector, and use both the name and value in each iteration.
-To illustrate, here’s a vector, which I have creatively named myvec. It is a numeric vector containing the numbers 1 to 26, and each element has a name, which in this case is represented by a letter of the alphabet.</description>
+      <description>title: ‘Iterating with names’  author: ’’  date: ‘2018-12-19’  slug: iterating-with-names  categories: [  ‘R’  ]  tags: [‘tidyverse’, ‘purrr’]  type: post    The Problem I’ve come across this problem a few times lately, when I’ve wanted to iterate through some sort of named list or vector, and use both the name and value in each iteration.
+To illustrate, here’s a vector, which I have creatively named myvec.</description>
     </item>
     
     <item>
@@ -76,7 +118,7 @@ The packagemetrics package allows us to generate a number of metrics about a pac
       <description>In this series of blog posts introducing tidy eval, we’ve been looking at why tidy eval is important, and terms like “quotation” and “quasiquotation”.
 The next step is to look at how we can write our own dplyr-style functions in R.
 This post will look at the following terms and functions:
-quosuresquo()enquo()What is a quosure?Quosures are a topic which come up frequently when talking about tidy eval.</description>
+ quosures quo() enquo()  What is a quosure? Quosures are a topic which come up frequently when talking about tidy eval.</description>
     </item>
     
     <item>
@@ -97,7 +139,7 @@ To recap, tidy eval refers to the ‘special’ type of evaluation used by dplyr
       <guid>/2018/03/29/what-is-tidy-eval-and-why-should-i-care/</guid>
       <description>I’m going to begin this post somewhat backwards, and start with the conclusion: tidy eval is important to anyone who writes R functions and uses dplyr and/or tidyr.
 I’m going to load a couple of packages, and then show you exactly why.
-library(dplyr)library(rlang)Data wrangling with base RHere’s an example function I have written in base R. Its purpose is to take a data set, and extract values from a single column that match a specific value, with both input and output both being in data frame format.</description>
+library(dplyr) library(rlang) Data wrangling with base R Here’s an example function I have written in base R. Its purpose is to take a data set, and extract values from a single column that match a specific value, with both input and output both being in data frame format.</description>
     </item>
     
     <item>

@@ -2,28 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/categories/c&#43;&#43;/</loc>
-    <lastmod>2021-04-21T00:00:00+00:00</lastmod>
+    <loc>/tags/arrow/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2021-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/cpp/</loc>
-    <lastmod>2021-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/cpp/examining-c-plus-plus-syntax-recordbatch-selectcolumns/</loc>
-    <lastmod>2021-04-21T00:00:00+00:00</lastmod>
+    <loc>/2021/04/27/definitions-1/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/</loc>
-    <lastmod>2021-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/arrow/</loc>
-    <lastmod>2021-04-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/post/</loc>
-    <lastmod>2021-04-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/04/27/this-week-on-the-arrow-dev-mailing-list/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/c&#43;&#43;/</loc>
+    <lastmod>2021-04-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/c&#43;&#43;/</loc>
+    <lastmod>2021-04-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/</loc>
+    <lastmod>2021-04-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/cpp/</loc>
+    <lastmod>2021-04-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/cpp/2021/04/22/what-is-a-struct/</loc>
+    <lastmod>2021-04-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/04/21/examining-c-plus-plus-syntax-recordbatch-selectcolumns/</loc>
+    <lastmod>2021-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/r/</loc>
     <lastmod>2021-04-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/tidyeval/</loc>
@@ -32,31 +47,28 @@
     <loc>/2021/04/20/why-is-eval-parse-bad/</loc>
     <lastmod>2021-04-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/cpp/modern-c/</loc>
+    <loc>/cpp/2021/04/19/modern-c/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/r/</loc>
+    <loc>/cpp/2021/04/19/pointers-and-references/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/cpp/what-is-const/</loc>
+    <loc>/cpp/2021/04/19/what-is-const/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/cpp/what-is-sexp/</loc>
+    <loc>/cpp/2021/04/19/what-is-sexp/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/04/17/three-valued-logic/</loc>
+    <lastmod>2021-04-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2019/07/28/user-2019/</loc>
     <lastmod>2019-07-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/code/</loc>
-    <lastmod>2018-12-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2018/12/19/iterating-with-names/</loc>
     <lastmod>2018-12-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/purrr/</loc>
-    <lastmod>2018-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/r/</loc>
     <lastmod>2018-12-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/tidyverse/</loc>
@@ -69,9 +81,6 @@
     <lastmod>2018-08-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2018/08/22/scraping-rstudio-conf-2018-abstracts/</loc>
-    <lastmod>2018-08-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/web-scraping/</loc>
     <lastmod>2018-08-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2018/07/31/comparing-r-packages-using-packagemetrics/</loc>
@@ -105,6 +114,9 @@
     <lastmod>2018-02-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/javascript/</loc>
+    <lastmod>2016-08-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/javascript/</loc>
     <lastmod>2016-08-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2016/08/16/pop-up-to-confirm-action-in-shiny/</loc>

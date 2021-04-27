@@ -3,7 +3,7 @@ title: "Three Valued Logic"
 author: ''
 date: '2021-04-17'
 slug: three-valued-logic
-categories: []
+categories: ['R']
 tags: []
 ---
 

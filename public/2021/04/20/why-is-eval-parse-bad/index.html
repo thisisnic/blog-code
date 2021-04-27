@@ -13,7 +13,7 @@
     <nav>
     <ul class="menu">
       
-      <li><a href="/">Home</a></li>
+      <li><a href="/post/">Home</a></li>
       
       <li><a href="/about/">About</a></li>
       
@@ -121,6 +121,21 @@ not_na_agg &lt;- purrr::reduce(not_na, `&amp;`)
 # filter only to retrieve rows which match with true
 tbl$Filter(not_na_agg)</code></pre>
 <p>As is common in these circumstances, there was a simpler and more aesthetically pleasing solution available that didn’t require parsing of expressions. I’m much happier with the above code - it feels like a much better approach!</p>
+<p>[Edited again!]</p>
+<p>Ultimately we went with a different approach that implemented functionality that already exists in the Arrow package. This approach is even better as, instead of evaluating <code>!is.na</code> on each column of data and combining them, we instead build an expression that is evaluated against the dataset.</p>
+<pre class="r"><code>not_na &lt;- purrr::map(tbl$columns, ~arrow:::build_array_expression(&quot;is_valid&quot;, .x))
+not_na_agg &lt;- Reduce(&quot;&amp;&quot;, not_na)
+tbl$Filter(arrow:::eval_array_expression(not_na_agg))</code></pre>
+<pre><code>## Table
+## 111 rows x 6 columns
+## $Ozone &lt;int32&gt;
+## $Solar.R &lt;int32&gt;
+## $Wind &lt;double&gt;
+## $Temp &lt;int32&gt;
+## $Month &lt;int32&gt;
+## $Day &lt;int32&gt;
+## 
+## See $metadata for additional Schema metadata</code></pre>
 
 </main>
 

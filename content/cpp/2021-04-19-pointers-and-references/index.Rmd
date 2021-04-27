@@ -123,10 +123,14 @@ In the examples above, we discuss raw pointers.  They are [discouraged in Modern
 
 ## Smart pointers
 
-Smart pointers are a modern version of pointers which is a class template and allows memory management to be done via C++ scoping rather than needing to be done manually.
+Smart pointers are a modern version of pointers which is a class template and allows memory management to be done via C++ scoping rather than needing to be done manually and without needing to use new or delete keywords.
 
 They can be declared using `std::uniqueptr`, `std::sharedptr`, and `std::weakptr`.
 
-A `sharedptr` is a smart pointer which can be managed by multiple sources.  You should use `make_shared` to create it.
+From: https://www.youtube.com/watch?v=UOB7-B2MfwA
 
+* `std::unique_ptr` - A unique pointer is a scoped pointer and it destroyed when out of that scope.  It cannot be copied.  Instantiate via std::make_unique.
 
+* `std::shared_ptr` - Work via counting how many references there are to that pointer.  When the reference count reaches 0, the memory is freed.  Instantiated via std::make_shared.  It can be copied 
+
+* `std::weak_ptr` - Doesn't increase the reference count when you copy a pointer.  Good for if you don't want to take ownership of the entity. It won't keep it alive.
