@@ -18,6 +18,24 @@ So when I found out I got the apprenticeship, I will admit, I shrieked with joy.
     </item>
     
     <item>
+      <title>R package documentation - what makes a good example?</title>
+      <link>/2021/05/13/r-package-documentation-what-makes-a-good-example/</link>
+      <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/05/13/r-package-documentation-what-makes-a-good-example/</guid>
+      <description>As part of my ongoing mission to make the documentation of the arrow R package as good as it can be, I’ve started thinking about what makes for good examples. I have found that example code that I can run is the best way for me to achieve rapid familiarity with a new R function, and so believe that every exported function in a package should have an accompanying example.</description>
+    </item>
+    
+    <item>
+      <title>R package documentation - what makes a good vignette?</title>
+      <link>/2021/05/13/r-package-documentation-what-makes-a-good-vignette/</link>
+      <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/05/13/r-package-documentation-what-makes-a-good-vignette/</guid>
+      <description>  </description>
+    </item>
+    
+    <item>
       <title>This Fortnight on the Arrow Dev Mailing List</title>
       <link>/2021/05/10/this-fortnight-on-the-arrow-dev-mailing-list/</link>
       <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
@@ -27,6 +45,15 @@ So when I found out I got the apprenticeship, I will admit, I shrieked with joy.
 New committers Ian Cook, Jonanthan Keane, and Daniël Heres were added as new committers
 OpenTelemetry Discussion around integrating OpenTelemetry (a library for distrubuted tracing) into the C++ codebase. OpenTelemetry allows instrumentation - being able to better make us of telemetry data for diagnosing errors and writing trace information.
 Interval data type Discussion around a proposal to introduce an interval (i.</description>
+    </item>
+    
+    <item>
+      <title>Arrow Expressions</title>
+      <link>/2021/04/30/arrow-expressions/</link>
+      <pubDate>Fri, 30 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/04/30/arrow-expressions/</guid>
+      <description>  </description>
     </item>
     
     <item>
@@ -268,7 +295,7 @@ In the UI file, near the top of the dashboardBody , call tags$head and tags$scri
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description>Hi, I&amp;rsquo;m Nic. I&amp;rsquo;m currently working at Ursa Computing on Apache Arrow. I&amp;rsquo;m co-author of the &amp;ldquo;Developing R Packages&amp;rdquo; course on Data Camp and have made a couple of small contributions to the tidyverse. In my spare time, I love travel, comedy, and food - both the cooking and eating of! Find me on Twitter: @nic_crane.</description>
+      <description>Hi, I&amp;rsquo;m Nic. I&amp;rsquo;m currently working at Ursa Computing on Apache Arrow. In my spare time, I love travel, camping, comedy, and BBQs! Find me on Twitter: @nic_crane. My CV can be found here.</description>
     </item>
     
     <item>

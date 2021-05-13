@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/categories/</loc>
+    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/documentation/</loc>
+    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/</loc>
     <lastmod>2021-05-13T00:00:00+00:00</lastmod>
   </url><url>
@@ -11,14 +17,26 @@
     <loc>/post/</loc>
     <lastmod>2021-05-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/arrow/</loc>
-    <lastmod>2021-05-10T00:00:00+00:00</lastmod>
+    <loc>/categories/r/</loc>
+    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/05/13/r-package-documentation-what-makes-a-good-example/</loc>
+    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/05/13/r-package-documentation-what-makes-a-good-vignette/</loc>
+    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
+    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/arrow/</loc>
     <lastmod>2021-05-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2021/05/10/this-fortnight-on-the-arrow-dev-mailing-list/</loc>
     <lastmod>2021-05-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/04/30/arrow-expressions/</loc>
+    <lastmod>2021-04-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2021/04/27/definitions-1/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
@@ -32,9 +50,6 @@
     <loc>/categories/c&#43;&#43;/</loc>
     <lastmod>2021-04-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2021-04-22T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/cpp/</loc>
     <lastmod>2021-04-22T00:00:00+00:00</lastmod>
   </url><url>
@@ -43,9 +58,6 @@
   </url><url>
     <loc>/2021/04/21/examining-c-plus-plus-syntax-recordbatch-selectcolumns/</loc>
     <lastmod>2021-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/r/</loc>
-    <lastmod>2021-04-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/tidyeval/</loc>
     <lastmod>2021-04-20T00:00:00+00:00</lastmod>
