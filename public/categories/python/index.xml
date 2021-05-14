@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>documentation on A minimal Hugo website</title>
-    <link>/tags/documentation/</link>
-    <description>Recent content in documentation on A minimal Hugo website</description>
+    <title>Python on A minimal Hugo website</title>
+    <link>/categories/python/</link>
+    <description>Recent content in Python on A minimal Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/documentation/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>R package documentation - what makes a good example?</title>
       <link>/2021/05/13/r-package-documentation-what-makes-a-good-example/</link>
@@ -14,15 +14,6 @@
       
       <guid>/2021/05/13/r-package-documentation-what-makes-a-good-example/</guid>
       <description>As part of my ongoing mission to make the documentation of the arrow R package as good as it can be, I’ve started thinking about what are the qualities of good examples. In my experience, having example code that I can run is the best way for me to achieve rapid familiarity with an R function I haven’t worked with before, or understand how to make best use of a function about which I already understand the basics.</description>
-    </item>
-    
-    <item>
-      <title>R package documentation - what makes a good vignette?</title>
-      <link>/2021/05/13/r-package-documentation-what-makes-a-good-vignette/</link>
-      <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/2021/05/13/r-package-documentation-what-makes-a-good-vignette/</guid>
-      <description>  </description>
     </item>
     
   </channel>

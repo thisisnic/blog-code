@@ -23,7 +23,7 @@ So when I found out I got the apprenticeship, I will admit, I shrieked with joy.
       <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
       
       <guid>/2021/05/13/r-package-documentation-what-makes-a-good-example/</guid>
-      <description>As part of my ongoing mission to make the documentation of the arrow R package as good as it can be, I’ve started thinking about what makes for good examples. I have found that example code that I can run is the best way for me to achieve rapid familiarity with a new R function, and so believe that every exported function in a package should have an accompanying example.</description>
+      <description>As part of my ongoing mission to make the documentation of the arrow R package as good as it can be, I’ve started thinking about what are the qualities of good examples. In my experience, having example code that I can run is the best way for me to achieve rapid familiarity with an R function I haven’t worked with before, or understand how to make best use of a function about which I already understand the basics.</description>
     </item>
     
     <item>

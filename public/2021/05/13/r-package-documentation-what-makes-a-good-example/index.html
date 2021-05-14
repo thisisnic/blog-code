@@ -42,147 +42,60 @@
 <script src="/2021/05/13/r-package-documentation-what-makes-a-good-example/index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>As part of my ongoing mission to make the documentation of the arrow R package as good as it can be, I’ve started thinking about what makes for good examples. I have found that example code that I can run is the best way for me to achieve rapid familiarity with a new R function, and so believe that every exported function in a package should have an accompanying example.</p>
-<div id="what-good-looks-like" class="section level2">
-<h2>What good looks like</h2>
-<p>I asked people on Twitter for their opinions of good R package documentation, and <a href="https://twitter.com/_J_sinclair/status/1391677551261650945">Jonathan Sinclair</a> highlighted <code>dplyr::case_when</code>.</p>
-<p>I’ve pasted the current version of the example code below.</p>
-<pre class="r"><code>x &lt;- 1:50
-case_when(
-  x %% 35 == 0 ~ &quot;fizz buzz&quot;,
-  x %% 5 == 0 ~ &quot;fizz&quot;,
-  x %% 7 == 0 ~ &quot;buzz&quot;,
-  TRUE ~ as.character(x)
-)
-
-# Like an if statement, the arguments are evaluated in order, so you must
-# proceed from the most specific to the most general. This won&#39;t work:
-case_when(
-  TRUE ~ as.character(x),
-  x %%  5 == 0 ~ &quot;fizz&quot;,
-  x %%  7 == 0 ~ &quot;buzz&quot;,
-  x %% 35 == 0 ~ &quot;fizz buzz&quot;
-)
-
-# If none of the cases match, NA is used:
-case_when(
-  x %%  5 == 0 ~ &quot;fizz&quot;,
-  x %%  7 == 0 ~ &quot;buzz&quot;,
-  x %% 35 == 0 ~ &quot;fizz buzz&quot;
-)
-
-# Note that NA values in the vector x do not get special treatment. If you want
-# to explicitly handle NA values you can use the `is.na` function:
-x[2:4] &lt;- NA_real_
-case_when(
-  x %% 35 == 0 ~ &quot;fizz buzz&quot;,
-  x %% 5 == 0 ~ &quot;fizz&quot;,
-  x %% 7 == 0 ~ &quot;buzz&quot;,
-  is.na(x) ~ &quot;nope&quot;,
-  TRUE ~ as.character(x)
-)
-
-# All RHS values need to be of the same type. Inconsistent types will throw an error.
-# This applies also to NA values used in RHS: NA is logical, use
-# typed values like NA_real_, NA_complex, NA_character_, NA_integer_ as appropriate.
-case_when(
-  x %% 35 == 0 ~ NA_character_,
-  x %% 5 == 0 ~ &quot;fizz&quot;,
-  x %% 7 == 0 ~ &quot;buzz&quot;,
-  TRUE ~ as.character(x)
-)
-case_when(
-  x %% 35 == 0 ~ 35,
-  x %% 5 == 0 ~ 5,
-  x %% 7 == 0 ~ 7,
-  TRUE ~ NA_real_
-)
-
-# case_when() evaluates all RHS expressions, and then constructs its
-# result by extracting the selected (via the LHS expressions) parts.
-# In particular NaN are produced in this case:
-y &lt;- seq(-2, 2, by = .5)
-case_when(
-  y &gt;= 0 ~ sqrt(y),
-  TRUE   ~ y
-)
-
-# This throws an error as NA is logical not numeric
-## Not run: 
-case_when(
-  x %% 35 == 0 ~ 35,
-  x %% 5 == 0 ~ 5,
-  x %% 7 == 0 ~ 7,
-  TRUE ~ NA
-)
-
-## End(Not run)
-
-# case_when is particularly useful inside mutate when you want to
-# create a new variable that relies on a complex combination of existing
-# variables
-starwars %&gt;%
-  select(name:mass, gender, species) %&gt;%
-  mutate(
-    type = case_when(
-      height &gt; 200 | mass &gt; 200 ~ &quot;large&quot;,
-      species == &quot;Droid&quot;        ~ &quot;robot&quot;,
-      TRUE                      ~ &quot;other&quot;
-    )
-  )
-
-
-# `case_when()` is not a tidy eval function. If you&#39;d like to reuse
-# the same patterns, extract the `case_when()` call in a normal
-# function:
-case_character_type &lt;- function(height, mass, species) {
-  case_when(
-    height &gt; 200 | mass &gt; 200 ~ &quot;large&quot;,
-    species == &quot;Droid&quot;        ~ &quot;robot&quot;,
-    TRUE                      ~ &quot;other&quot;
-  )
-}
-
-case_character_type(150, 250, &quot;Droid&quot;)
-case_character_type(150, 150, &quot;Droid&quot;)
-
-# Such functions can be used inside `mutate()` as well:
-starwars %&gt;%
-  mutate(type = case_character_type(height, mass, species)) %&gt;%
-  pull(type)
-
-# `case_when()` ignores `NULL` inputs. This is useful when you&#39;d
-# like to use a pattern only under certain conditions. Here we&#39;ll
-# take advantage of the fact that `if` returns `NULL` when there is
-# no `else` clause:
-case_character_type &lt;- function(height, mass, species, robots = TRUE) {
-  case_when(
-    height &gt; 200 | mass &gt; 200      ~ &quot;large&quot;,
-    if (robots) species == &quot;Droid&quot; ~ &quot;robot&quot;,
-    TRUE                           ~ &quot;other&quot;
-  )
-}
-
-starwars %&gt;%
-  mutate(type = case_character_type(height, mass, species, robots = FALSE)) %&gt;%
-  pull(type)</code></pre>
-<p>I think Jonathan is spot on in his assessment. To paraphrase, the highlights for him are that there is next to no prose or intro, plenty of comments where needed, a variety of examples, and also examples of what <em>not</em> to do. This kind of documentation really appeals to my skim-reading self. If I’m trying to accomplish a task, sometimes I just want to run some code and see what happens, to get an intuitive feel for what a function does. Whilst I am fully prepared to slow down and read the rest of the documentation, a “quick win” motivates me to invest the effort. It tells me that the developers of this code have prioritised making things easy to understand, and that the time I am investing will pay off.</p>
-<p>I’ve been skimming through the documentation for some tidyverse packages - as I consider many of these to be well documented and easy to read - and here are some things I’ve observed which I think make the examples look great:</p>
+<p>As part of my ongoing mission to make the documentation of the arrow R package as good as it can be, I’ve started thinking about what are the qualities of good examples. In my experience, having example code that I can run is the best way for me to achieve rapid familiarity with an R function I haven’t worked with before, or understand how to make best use of a function about which I already understand the basics. In the book “R Packages”, Hadley Wickham <a href="https://r-pkgs.org/man.html#man-functions">remarks</a> that examples are “a very important part of the documentation because many people look at the examples first” and <a href="https://devguide.ropensci.org/building.html#general">rOpenSci recommend</a> that each of a package’s exported functions should be accompanied by examples.</p>
+<p>In this blog post, I’m going to explore the things that I believe make for good function examples in documentation, focussing on R but also mentioning some examples from Python.</p>
+<div id="what-good-looks-like-in-r" class="section level2">
+<h2>What good looks like in R</h2>
+<p>I asked people on Twitter for their opinions of good R package documentation, and <a href="https://twitter.com/_J_sinclair/status/1391677551261650945">Jonathan Sinclair</a> highlighted the ‘examples’ section from <a href="https://rdrr.io/cran/dplyr/man/case_when.html"><code>dplyr::case_when</code></a>, the beggining of which is shown below.</p>
+<div class="figure">
+<img src="images/dplyr_case_when.png" alt="" />
+<p class="caption">(image from: <a href="https://rdrr.io/cran/dplyr/man/case_when.html" class="uri">https://rdrr.io/cran/dplyr/man/case_when.html</a>)</p>
+</div>
+<p>I think Jonathan is spot on in his assessment. To paraphrase, the highlights for him are:</p>
 <ul>
-<li>using very simple or common in-built datasets</li>
-<li>demonstrating non-obvious behaviours of a function</li>
-<li>demonstrating different parameter values/combinations</li>
-<li>demonstrating any unusual parameters</li>
+<li>there is next to no prose or intro</li>
+<li>there are plenty of comments where needed</li>
+<li>it includes a variety of examples</li>
+<li>it includes examples of what <em>not</em> to do.</li>
+</ul>
+<p>This kind of documentation really appeals to my skim-reading self. If I’m trying to accomplish a task, sometimes I just want to run some code and see what happens, to get an intuitive feel for what a function does. Whilst I am fully prepared to slow down and read the rest of the documentation, a “quick win” motivates me to invest the additional effort. It tells me that the developers of this code have prioritised making things easy to understand, and that the time I am investing will pay off.</p>
+<p>I’ve been skimming through the documentation of some tidyverse and related packages - as I consider many of these to be well documented and easy to read - and here are some things I’ve observed which I think one can do to make function examples look great:</p>
+<ul>
+<li>include the most basic usage of a function</li>
+<li>use very simple or common in-built datasets</li>
+<li>demonstrate non-obvious behaviours of a function</li>
+<li>demonstrate different parameter values/combinations</li>
+<li>demonstrate any unusual parameters</li>
+<li>demonstrate on different objects if appropriate</li>
 <li>sometimes go beyond the use of an individual function to include common mini-workflows</li>
 <li>group documentation and examples for similar functions together</li>
-<li>examples which may lead to unexpected results</li>
+<li>include examples which may lead to unexpected results</li>
+<li>include comments to explain examples</li>
+<li>no examples for deprecated functions, to discourage their use</li>
+<li>no unpredictable external dependencies - <code>rvest::html_text</code> manually creates HTML to demonstrate capabilities rather than scraping an external site</li>
+<li>sometimes showing output when it adds to the example (e.g. <code>tidyselect::starts_with()</code> and many other examples from that package)</li>
+<li>examples should be correct and run without error (unless intended to show erroneous output)</li>
 </ul>
-<p>Other things which I am unsure either way about:
-* showing output when it adds to the example (e.g. <code>tidyselect::starts_with()</code> and many other examples from that package)</p>
 </div>
-<div id="what-bad-looks-like" class="section level2">
-<h2>What bad looks like</h2>
+<div id="what-bad-looks-like-in-r" class="section level2">
+<h2>What bad looks like in R</h2>
 <p>I am not intending to “name and shame” any package authors who haven’t included examples for their functions. It may have been overlooked, there may be plenty of explanation elsewhere, or they may have felt that the code was not sufficiently complex to require examples. It might be true that it seems obvious what a function does, but that makes a lot of assumptions about the user of your code that might not hold true.</p>
+</div>
+<div id="what-good-looks-like-generally" class="section level2">
+<h2>What good looks like generally</h2>
+<p>When reading through examples, one thing that struck me is that when I’m looking at Python docs in Jupyter Notebook (<a href="https://stackoverflow.com/questions/30855169/how-can-i-see-function-arguments-in-ipython-notebook-server-3">press shift + tab</a>), I also see the output of running the examples.</p>
+<p><img src="images/sklearn_docs.png" /></p>
+<p>Similarly, both examples and outputs are shown in the official docs for some libraries, for example, pandas.</p>
+<p><img src="images/pandas.png" /></p>
+<p>I think this is really helpful.</p>
+<p>In R, I see code which I can run, but in most cases need to take the extra step of running to get the content. I’m torn as to whether this is good or not. On the one hand, it encourages you to actually run the code and get a more tangible feel for what it does, and saves valuable space in the Viewer window in RStudio. On the other hand, it adds an extra manual step to your workflow and lengthens the time until that precious “quick win” of enlightenment when exploring a new function.</p>
+<p>You get a lot closer to this on website <a href="https://rdrr.io/">rdrr.io</a>, which indexes R package documentation and allows examples to be run inline. However, examples are run one after the other without the original code being displayed, and so in the case of multiple examples, you have to match up the output to which example it is from.</p>
+<div class="figure">
+<img src="images/rdrr.png" alt="" />
+<p class="caption">(from <a href="https://rdrr.io/" class="uri">https://rdrr.io/</a>)</p>
+</div>
+<p>All that said, whilst the ability to see the output of examples is a nice-to-have, I don’t think it’s essential to good function documentation. With any piece of documentation, it’s important to consider the purpose; at a minimum, examples serve the purpose of educating the reader on how to use a function, and you don’t need to see the output to do that.</p>
+<p>In conclusion, good examples make functions easier to work, and help readers of your documentation gain a deeper understanding of how a function works. Whilst any examples are better than no examples, with careful thought about the content, you can give your users the best chance of success.</p>
 </div>
 
 </main>
