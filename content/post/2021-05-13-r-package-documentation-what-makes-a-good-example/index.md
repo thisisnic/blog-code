@@ -1,7 +1,7 @@
 ---
 title: R package documentation - what makes a good example?
 author: ''
-date: '2021-05-13'
+date: '2021-05-14'
 slug: r-package-documentation-what-makes-a-good-example
 categories:
   - R
@@ -70,4 +70,4 @@ You get a lot closer to this on website [rdrr.io](https://rdrr.io/), which index
 
 All that said, whilst the ability to see the output of examples is a nice-to-have, I don't think it's essential to good function documentation.  With any piece of documentation, it's important to consider the purpose; at a minimum, examples serve the purpose of educating the reader on how to use a function, and you don't need to see the output to do that.
 
-In conclusion, good examples make functions easier to work, and help readers of your documentation gain a deeper understanding of how a function works.  Whilst any examples are better than no examples, with careful thought about the content, you can give your users the best chance of success.
+In conclusion, good examples make functions easier to work with, and help readers of your documentation gain a deeper understanding of how a function works.  Whilst any examples are better than no examples, with careful thought about the content, you can give your users the best chance of success.
