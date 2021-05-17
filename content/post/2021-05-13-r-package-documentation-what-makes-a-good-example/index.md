@@ -74,4 +74,6 @@ Some packages include output as comments within their examples.  For instance, t
 
 All that said, while the ability to see the output of examples is a nice-to-have, I don't think it's essential to good function documentation.  With any piece of documentation, it's necessary to consider the purpose; at a minimum, examples exist to tell the reader how to use a function, and you don't need to see the output to do that.
 
+[Edited to add: since I first wrote this, I found out that [it is possible to easily run examples from help files by selecting them and then hitting Ctrl+Enter, the same as running code in the Source pane.](https://blog.rstudio.com/2017/09/13/rstudio-v1.1-the-little-things/)]
+
 In conclusion, good examples make functions easier to work with and help readers of your documentation gain a deeper understanding of how a function works.  While any examples are better than no examples, you can give your users the best chance of success when using your code with careful thought about the content of your documentation.
