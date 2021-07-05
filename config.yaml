@@ -1,6 +1,6 @@
 baseurl: "/"
-languageCode: "en-us"
-title: "A minimal Hugo website"
+languageCode: "en-uk"
+title: "Nic Crane"
 theme: "hugo-xmin"
 googleAnalytics: ""
 disqusShortname: ""
@@ -29,12 +29,10 @@ menu:
       url: "index.xml"
     - name: Speaking
       url: "speaking/"
-    - name: Twitter
-      url: "https://twitter.com/nic_crane"
 
 params:
   description: "A website built through Hugo and blogdown."
-  footer: "&copy; Nic Crane 2016 -- 2021 | [Github](https://github.com/thisisnic) | [Twitter](https://twitter.com/nic_crane)"
+  footer: "&copy; Nic Crane 2016 -- 2021"
 
 markup:
   goldmark:
