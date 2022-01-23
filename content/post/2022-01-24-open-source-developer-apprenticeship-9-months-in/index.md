@@ -1,12 +1,12 @@
 ---
-title: Open Source Developer Apprenticeship - 9 months in
+title: "Open Source Developer Apprenticeship - 9 months in"
 author: ''
-date: '2022-01-24'
+date: '2022-01-23'
 slug: open-source-developer-apprenticeship-9-months-in
 categories: []
 tags:
-  - contributing to open source
-  - arrow
+- contributing to open source
+- arrow
 ---
 
 I’ve been meaning to blog for ages, but have been so wrapped up in project things I’ve not found/made the time to do so.  Note that around July 2021, Ursa Computing (i.e. where I originally started my apprenticeship) became part of a new company, [Voltron Data](https://voltrondata.com/), but for the sake of simplicity here, I refer to where I work as Voltron Data, even when talking about things that happened prior to July 2021.

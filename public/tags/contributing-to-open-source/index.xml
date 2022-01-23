@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>contributing to open source on Nic Crane</title>
+    <link>/tags/contributing-to-open-source/</link>
+    <description>Recent content in contributing to open source on Nic Crane</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Sun, 23 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/contributing-to-open-source/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Open Source Developer Apprenticeship - 9 months in</title>
+      <link>/2022/01/23/open-source-developer-apprenticeship-9-months-in/</link>
+      <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/01/23/open-source-developer-apprenticeship-9-months-in/</guid>
+      <description>I’ve been meaning to blog for ages, but have been so wrapped up in project things I’ve not found/made the time to do so. Note that around July 2021, Ursa Computing (i.e. where I originally started my apprenticeship) became part of a new company, Voltron Data, but for the sake of simplicity here, I refer to where I work as Voltron Data, even when talking about things that happened prior to July 2021.</description>
+    </item>
+    
+  </channel>
+</rss>
