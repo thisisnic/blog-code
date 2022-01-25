@@ -2,7 +2,7 @@ baseurl: "/"
 languageCode: "en-uk"
 title: "Nic Crane"
 theme: "hugo-xmin"
-googleAnalytics: ""
+googleAnalytics: "UA-116704434-1"
 disqusShortname: ""
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 footnotereturnlinkcontents: "↩"
