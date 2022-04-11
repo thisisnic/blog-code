@@ -218,7 +218,7 @@ I discovered this number through trial and error, but after reading a bit more a
 So now let's take a look - is our error message attributed to the right place in the call stack?
 
 ```{r, error=TRUE}
-import_cat_data("even_more_cats.tsv")
+import_cat_data("even_more_cats.csv")
 ```
 
 Yes, it is!  
