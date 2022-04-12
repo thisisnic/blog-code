@@ -1,0 +1,90 @@
+---
+title: "Using Tidy Eval with dplyr::filter"
+author: "Nic Crane"
+date: '2018-03-27'
+slug: using-tidy-eval-with-dplyr-filter
+tags:
+- dplyr
+- tidyeval
+categories: 
+  - R
+---
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(error = TRUE)
+suppressMessages(library(dplyr))
+```
+
+I previously blogged about using tidy eval with `dplyr::mutate`, and found that post handy to refer back to.  I still haven't got round to having an in-depth look at the principles of tidy eval, so instead I'm continuing to explore problems as and when they come up.  In this post, I'll be taking a look at using tidy eval with `dplyr::filter`.  Once again, I'll be using the iris dataset to create examples that should be simple to follow.
+
+I've updated this blog post to reflect a number of conversations I've had via Twitter since publishing it.  The one thing I'd say is that if, as a newcomer to tidy eval, this is hard to get your head around the theory, hopefully the code examples should at least be useful!
+
+## Typical Usage
+
+Let's start off with the typical way of using `filter`.  If I wanted to return just the rows from the iris dataset that contain the value "versicolor" in the column called "Species", I might run the following line of code:
+
+```{r}
+filter(iris, Species == "versicolor") %>%
+  head()
+```
+
+The input to the filter function, `Species == "versicolor"` is an expression which is evaluated in the context of the relevant data frame.
+
+As a recap of how `dplyr` works (thanks to @_lionelhenry for this):
+"dplyr operates on name-expression pairs. The names are purely quoted while the expressions are quoted and then evaluated in the data frame. Unquoting provides an escape hatch (programmability) for both names and expressions."
+
+Note that there is a terminology difference here between base R and dplyr (thanks again @lionelhenry for the clarification):
+
+"...base R treats names and symbols as synonyms (e.g as.name ()) but we prefer to keep the term names for the strings returned by names()"
+
+Therefore, instead of providing a string directly to `filter`, we could also use a symbol `mySpecies`, which R will evaluate when it evaluates the expression, as in the example below.
+
+```{r}
+mySpecies <- "versicolor"
+filter(iris, Species == mySpecies) %>%
+  head()
+```
+
+We get exactly the same result as before.  The bigger challenge comes when we want to use a variable in the place of the name, and that's what I'll be looking at in the next section.
+
+## Advanced Usage
+
+I'm going to start off with what doesn't work.
+
+I might naively run the two lines of code below, and expect to get identical results to those in the previous section.
+
+```{r}
+a <- "Species"
+filter(iris, a == "versicolor") %>%
+  head()
+```
+However, this hasn't worked and I get an empty data frame returned.  This is because dplyr has tried to filter the iris dataset by rows which have the value "versicolor" in a column called "a", and so we need to take a different approach.
+
+The next thing I might try is unquoting `a`. The `!!` (bang bang) operator can be used to unquote things, so let's give it a try.
+
+## Bang Bang
+
+```{r}
+a <- "Species"
+filter(iris, !!a == "versicolor") %>%
+  head()
+```
+
+This is close, but still not perfect. Let's take a look at part of the help file for `!!`: 
+
+"The !! operator unquotes its argument. It gets evaluated immediately in the surrounding context."
+
+The example above doesn't work because we want `a` to be evaluated to `Species` to mirror the syntax in the first, typical usage example I gave at the start of this post.  However, `a` is being evaluated as `"Species"` which is why it isn't working.  
+
+## Create a Symbol
+
+And so, the final thing we need to do is turn the character string `"Species"` into `Species`, a symbol.  We can do this by first calling the `sym` function from `rlang` on the variable `a`, and then using the `!!` operator to evaluate its results.
+ 
+ 
+```{r}
+a <- "Species"
+filter(iris, !!rlang::sym(a) == "versicolor") %>%
+  head()
+```
+
+Hoorah, it worked!  I hope this helped further explain tidy eval - I certainly learned a lot by using trial and error to find the correct syntax and then working backwards to figure out *why* it worked (and then some fantastic people on Twitter kindly pointing out where I'd gone terribly wrong and patiently explaining the correct answer!).  I'd love to hear your feedback; I'm @nic_crane on Twitter.  Massive thanks to @_lionelhenry and @romain_francois for your input on this! :)

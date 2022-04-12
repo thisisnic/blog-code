@@ -1,0 +1,39 @@
+---
+title: Missing Values
+author: Nic
+date: '2021-04-15'
+slug: missing-values
+categories: []
+tags:
+  - R
+  - arrow
+  - python
+---
+
+Working on writing R bindings for Arrow objects has been really fascinating as some of the work has led me to have to hold multiple frameworks in mind at once and be able to translate between them.  In many cases, direct mappings between concepts exist and the work is fairly straightforward, but in other cases, differences in implementations makes things a little more complicated.  Here's an interesting case I came across when trying to work out why Arrow's `is_null` and R's `is.na` needed extra work to behave similarly.
+
+(explain using this and the fact that `is_null` is all about the null bitmask: https://issues.apache.org/jira/browse/ARROW-12055)
+
+Missing values are tricky to represented differently R, Python, and Arrow's C++ implementation.
+
+I came across this issue when writing R bindings for C++ functions that handle NAs.  I ran into a fairly complex issue when testing on datasets which contain null values.  
+
+This article sums it up nicely: https://www.oreilly.com/content/handling-missing-data/
+
+R uses sentinel values - for example, with integers, the smallest possible integer value.
+
+Pandas sometimes does weird things which is why you get columns converted to floats sometimes if they contain NaNs (as NaNs are the only Pandas NA, and only implemented for floats?)
+
+Arrow arrays - masks
+
+
+sentinel value in R uses the smallest integer
+
+sentinel aprppaoch to NAs in R versus. in Arrow having a separate mask indicating which values are valid - sometimes called a bitmask; 
+
+python uses a mask as a boolean array; arrow uses a bitmask so it's smaller to use.
+
+
+can't do zero copy between sentinel and bitmask - need to convert! so extra processing overheads when you have NAs in your data.
+
+Similar in Python- convert to null (not nan) as pandas only has nan and don't want to treat.

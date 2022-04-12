@@ -1,0 +1,36 @@
+---
+title: Pop-up to confirm action in Shiny
+author: Nic Crane
+date: '2016-08-16'
+slug: pop-up-to-confirm-action-in-shiny
+categories:
+  - R
+  - JavaScript
+tags:
+  - shiny
+  - JavaScript
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>It’s a gorgeous evening in Bath tonight, and my evening has been improved by finding a free table outside at the pub, a large glass of Sauvignon Blanc, and working out how to include a JavaScript confirmation box in Shiny. Here, I’m using Shiny dashboard, although this methodology will work fine with other UI layouts.</p>
+<p>In the UI file, near the top of the dashboardBody , call <code>tags$head</code> and <code>tags$script</code> to give the source of the JavaScript file:</p>
+<pre class="r"><code>tags$head(
+  tags$script(src = &#39;custom.js&#39;)
+),</code></pre>
+<p>Then, in a file named <code>custom.js</code> as above, within the <code>www</code> folder, include the following code. Here, the button which the user clicks on has the inputId set to “submit”.</p>
+<pre class="r"><code>$(document).on(&#39;shiny:inputchanged&#39;, function(event) {
+
+  if (event.name === &#39;submit&#39;) {
+
+    var r = confirm(&quot;Are you sure you want to continue?&quot;);
+    
+    if (r === false) {
+      event.preventDefault();
+    } 
+
+  }
+
+});</code></pre>
+<p>Want to know more about JavaScript events in Shiny? Visit this article on the RStudio website for a comprehensive guide: <a href="http://shiny.rstudio.com/articles/js-events.html" class="uri">http://shiny.rstudio.com/articles/js-events.html</a></p>

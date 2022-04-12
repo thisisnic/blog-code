@@ -1,0 +1,70 @@
+---
+title: What the heck is quasiquotation?
+author: Nic Crane
+date: '2018-03-31'
+slug: what-the-heck-is-quasiquotation
+categories:
+  - R
+tags:
+  - dplyr
+  - tidyeval
+  - tidyverse
+---
+
+In a [previous entry](https://thisisnic.github.io/2018/03/29/what-is-tidy-eval-and-why-should-i-care/), I introduced the concept of tidy eval.  If you're completely new to tidy eval and haven't read that post yet, I'd suggest you go back to it before continuing, as this post will build upon the concepts I discussed there.
+
+To recap, tidy eval refers to the 'special' type of evaluation used by dplyr functions.  Whereas in base R, you have to refer the data frame in question if you want to returns particular rows, this is not the case with dplyr functions.  Consider the two following equivalent pieces of R code.  The first uses base R:
+
+```{r}
+iris[iris$Sepal.Length > 7.5, ]
+```
+
+```{r, echo = FALSE}
+suppressMessages(library(dplyr))
+suppressWarnings(library(rlang))
+```
+And the second uses the filter function from dplyr:
+
+```{r}
+library(dplyr)
+filter(iris, Sepal.Length > 7.5)
+```
+
+In the case of call to `filter()`, we didn't need to refer back to the `iris` data frame.  This is because dplyr functions use tidy evaluation to **quote the expression and evaluate it within the context of the data frame being referred to**.
+
+## Definition 1: Quotation
+
+From the help file for quotation from the rlang package:
+
+>> Quotation is a mechanism by which an expression supplied as argument is captured by a function. Instead of seeing the value of the argument, the function sees the recipe (the R code) to make that value.
+
+So now we've defined quotation, what is quasiquotation?
+
+## Definition 2: Quasiquotation
+
+Take a look at this example from a previous post:
+
+```{r}
+library(rlang)
+
+wrangle_data <- function(x, col_name, val){
+  
+  one_col <- select(x, !!sym(col_name))
+  filter(one_col, !!sym(col_name) == val)
+}
+
+wrangle_data(iris, "Species", "versicolor") %>%
+  head()
+```
+
+In the example, in both the calls to `select()` and `filter()`, we wrap `col_name` in a call to `sym()`, which takes the content of `col_name` (a string) and turns it into something that will look like R code to dplyr (a symbol).  We then use the `!!` (bang bang) operator to unquote the call to `sym()`, or rather, to immediately evaluate it.
+
+This combination of quoting and unquoting is termed quasiquotation.  Let's have a look at the definition from the help file for quasiquotation from the rlang package:
+
+>> Quasiquotation is the mechanism that makes it possible to program flexibly with tidy evaluation grammars like dplyr.
+
+>> Quasiquotation is the combination of quoting an expression while allowing immediate evaluation (unquoting) of part of that expression. We provide both syntactic operators and functional forms for unquoting.
+
+Quasiquotation is an essential concept to be aware of when including dplyr functions within your own functions.  In future posts, I'm going to continue to explore the different functions and operators that are used in quasiquotation.
+
+As ever, I'm no expert on tidy eval, just a newie [learning out loud](https://maraaverick.rbind.io/2017/11/learning-out-loud-slides-from-earl-boston/) and any feedback on this post [via Twitter](https://twitter.com/nic_crane/status/980039347692081152) is much welcomed!

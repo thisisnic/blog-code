@@ -1,0 +1,10 @@
+---
+title: R package documentation - what makes a good vignette?
+author: ''
+date: '2021-05-13'
+slug: r-package-documentation-what-makes-a-good-vignette
+categories:
+  - R
+tags:
+  - documentation
+---

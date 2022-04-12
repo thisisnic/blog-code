@@ -1,0 +1,99 @@
+---
+title: Exploring Tidy Eval at a Snail's Pace
+author: Nic Crane
+date: '2018-02-20'
+slug: exploring-tidy-eval-snails-pace
+categories:
+  - R
+tags:
+  - dplyr
+  - tidyeval
+---
+
+I recently attended rstudio::conf, with my favourite talks being those which taught me new things that I am going to use in my day-to-day work.  I attended and enjoyed Hadley Wickham's talk, 'Tidy eval: programming with dplyr, tidyr, and ggplot2', although got sidetracked trying to keep up typing whilst listening.  
+
+When I'm delivering training courses, this is the one thing I advise all attendees *not* to do - it's so easy to miss important points whilst running code.  
+
+Anyway, Hadley's talk covered lots of important background information about tidy eval, but I'm still finding a lot of it pretty unintuitive, so I thought I'd explore the aspects of tidy eval that I come across in my day-to-day work, at a snail's pace, in the hope that it'll start making sense.
+
+```{r,  out.width = "50%", echo = FALSE}
+knitr::include_graphics("./images/pallida.jpg") 
+```
+
+The example I'm going to use in this post is the iris dataset.  I've yet to meet someone who has been learning R for a while who isn't sick of this dataset by now, but for the sake of completeness, let's take a quick look at the first few lines now.
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(error = TRUE)
+suppressMessages(library(dplyr))
+```
+
+```{r}
+head(iris)
+```
+
+Let's say we discovered that all of the plants in this dataset belonged to a new species, pallida, and we wanted to update the value of that column to reflect this.  In this example, we'll look at different ways we might decide to do this using dplyr syntax.
+
+## Typical Usage
+
+The first way in which we can update the contents of this column is by using the most common way of interacting with mutate, and this is the format that most people will be familiar with.  When we use `mutate()` to create or update columns, after we've specified the dataset, we specify the columns to create or update in the form of *name-value pairs*.
+
+```{r}
+mutate(iris, Species = "Pallida") %>%
+  head()
+```
+
+By default, `dplyr` *quotes the name* and *evaluates the value*.  Read that sentence a few times, as this is the one which made this start to finally make sense to me.  In other words, although we've specified 'Species' like we might any other object, it is quoted by `dplyr` and took to represent a column name.  And we have specified 'Pallida' as a character vector of length 1, which is then evaluated.
+
+That's why, we can easily swap the *value* side of the pair for an object, and again, it is evaluated, and we get an identical result.
+
+```{r}
+targetValue = "Pallida"
+mutate(iris, Species = targetValue) %>%
+  head()
+```
+
+This is great if we want to either specify the target value within the function or as another variable, but things get tricky if we want to do something similar with the name.  Let's look first at what goes wrong.  
+
+## Tidy Eval
+
+I might naively try to define the target column name as a variable and try to use that in my mutate call.
+
+```{r}
+targetColumn = "Species"
+mutate(iris, targetColumn = "Pallida") %>%
+  head()
+```
+
+However, as 'targetColumn' is quoted instead of evaluated, we simply add a new column, literally called 'targetColumn'.
+
+If you're familiar with more "old school" R syntax, you might think to wrap 'targetColumn' in a call to `eval` in order to evaluate it, but this generates an error message.
+
+```{r}
+mutate(iris, eval(targetColumn) = "Pallida") %>%
+  head()
+```
+A bit of searching, and you might find the !! (**"bang bang"**) operator and the identical function `UQ()`.  The purpose of these functions is to unquote their argument.  This sounds promising; if before we were *quoting the name* and *evaluating the value*, then unquoting the name should surely solve our problem?
+
+```{r}
+mutate(iris, !!targetColumn = "Pallida") %>%
+  head()
+```
+
+Unfortunately not!  There's one small piece of the puzzle missing, and that's `:=`, or, the **definition operator**.
+
+```{r}
+mutate(iris, !!targetColumn := "Pallida") %>%
+  head()
+```
+
+The reasoning for the definition operator appears to be some underlying mechanism of how R evaluates things generally when using `=`, as mentioned in the below quote from documentation on quasiquotation in the `rlang` package:
+
+"Unfortunately R is very strict about the kind of expressions supported on the LHS of =. This is why we have made the more flexible := operator an alias of =. You can use it to supply names, e.g. a := b is equivalent to a = b."
+
+And voila, we've done it!  For the sake of completeness, I wanted to show a final example which uses variables for both the name and the value components in our `mutate` call.  Using the `!!` and `:=` operators don't affect how the value is evaluated and so we can simply use a predefined variable here.
+
+```{r}
+mutate(iris, !!targetColumn := targetValue) %>%
+  head()
+```
+

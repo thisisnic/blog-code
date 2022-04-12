@@ -1,0 +1,65 @@
+---
+title: "Examining C++ syntax - RecordBatch::SelectColumns"
+author: ''
+date: '2021-04-21'
+slug: examining-c-plus-plus-syntax-recordbatch-selectcolumns
+categories: 
+  - C++
+tags: ['C++']
+---
+
+I'm approaching learning C++ by taking both a top-down and bottom-up approach, looking at tutorials and learning the basics whilst also working with existing C++ code in the Arrow codebase.
+
+I wanted to take a snippet of code from something that I've been working on an enhance my understanding of it.  I posted this on Slack, and my colleagues were generous with their time and knowledge, helping me check my understanding, which I'm now going to outline below.
+
+Here's the code in one chunk; I'll be breaking it down into smaller pieces as I explore it.
+
+```{rcpp, eval = FALSE}
+Result<std::shared_ptr<RecordBatch>> RecordBatch::SelectColumns(const std::vector<int>& indices) const {
+  int n = static_cast<int>(indices.size());
+  FieldVector fields(n);
+  ArrayVector columns(n);
+  for (int i = 0; i < n; i++) {
+    int pos = indices[i];
+    if (pos < 0 || pos > num_columns() - 1) {
+      return Status::Invalid("Invalid column index ", pos, " to select columns.");
+    }
+    fields[i] = schema()->field(pos);
+    columns[i] = column(pos);
+  }
+  auto new_schema =
+      std::make_shared<arrow::Schema>(std::move(fields), schema()->metadata());
+  return RecordBatch::Make(new_schema, num_rows(), std::move(columns));
+}
+```
+The notes below are not entirely my own, and are adapted from snippets of conversation with others - thanks everyone who helped me work this out!
+
+## Method definition and arguments
+
+For context, RecordBatch is a kind of `data.frame` type structure, and this `SelectColumns` method is used to return a subset of its columns.  This code is implementing the SelectColumns method for the RecordBatch class.
+
+`Result<std::shared_ptr<RecordBatch>>` is declaring that the return type from this method is a Result<RecordBatch> object.  It's actually a shared pointer that points to the object.  We often use shared pointers as objects can be large and we don't want to copy them every time.  Another benefit of using shared pointers is that the object's lifetime is managed automatically and it doesn't have to be manually deleted when it's no longer being used.
+
+Result is a template. Arrow does not throw exceptions, but instead returns an error code after each call.  However, that is kind of inconvenient because the error code occupies your valuable return spot.  Instead, Arrow returns Result<T> to mean "I am giving you a T but if something fails you will get a Status instead".  Any Result<X> type is a distinct type from another Result<Y>. The Result template defines behaviour that is abstractly common between all Result<T> types, but those types are nevertheless distinct and cannot be substituted for one another (except if conversions are explicitly defined).
+
+The function has 1 argument - `indices` - which is a vector of ints; the `&` means that we are passing in a reference to the original object and the `const` keyword is used to flag that it won't be changed inside the method.  There is a `const` before the method's opening bracket because this should be done if a method "does not change the state of the object, and should be callable on an object that is itself `const`."
+
+## Method body
+
+`int n = static_cast<int>(indices.size());` is simply assigning to variable `n` the output of the `size()` method of indices.  The use of `static_cast<int>` ensures it is of the intended type.
+
+There are two subsequent declarations; `FieldVector fields(n);` and `ArrayVector columns(n);`.  These are using aliases; the code to define `FieldVector` is `using FieldVector = std::vector<std::shared_ptr<Field>>;` and the `ArrayVector` code is very similar.  This is done to save space and make code more readable.
+
+Next, we have the for loop.  It loops through each of the supplied indices, and appends both fields and columns with the field or column at that position in the original RecordBatch object.  An interesting bit of syntax there is `schema()->field(pos);`.  This actually means call the `schema()` method on the current object (the supplied RecordBatch) and then call its `field()` method passing in the value of `pos`.  Here, the `->` syntax is used to call the method rather than `.` is because the object is a pointer.
+
+Once those variables have been assigned their values, we begin to assemble a new RecordBatch.  First, we begin with creating a new Schema from their values: `auto new_schema = std::make_shared<arrow::Schema>(std::move(fields), schema()->metadata());`
+
+Schema here has its type inferred automatically via the `auto` keyword.  The code `std::make_shared` is used to make a new shared pointer to the Schema object.  `std::move` is used so that the actual objects themselves are moved rather than creating a copy when passing into the function call.  When an object will not be used afterwards, you can move it when passing it to another function, which can spare a copy. For the most simple types, copies are costless so we don't bother (no need to move an int for example). But, typically, copies are expensive for strings, vectors and larger objects.
+
+## Method return statement
+
+Finally, the return statement creates a new RecordBatch object to return.
+
+`return RecordBatch::Make(new_schema, num_rows(), std::move(columns));`
+
+It takes the new schema, and the `columns` object is moved rather than passed in.

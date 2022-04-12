@@ -1,0 +1,77 @@
+---
+title: 'Iterating with names'
+author: ''
+date: '2018-12-19'
+slug: iterating-with-names
+categories: [
+  'R'
+]
+tags: ['tidyverse', 'purrr']
+type: post
+---
+
+# The Problem
+
+I've come across this problem a few times lately, when I've wanted to iterate through some sort of named list or vector, and use both the name and value in each iteration. 
+
+To illustrate, here's a vector, which I have creatively named `myvec`.  It is a numeric vector containing the numbers 1 to 26, and each element has a name, which in this case is represented by a letter of the alphabet.
+
+```{r}
+library(purrr)
+myvec <- 1:26
+names(myvec) <- LETTERS
+myvec
+```
+
+What if I want to iterate through this vector and produce a string, containing both the value and its name?
+
+There are lots of ways to do this, but I want something that feels clean and simple, preferably using base R or tidyverse functions.
+
+If I attempt to solve this problem using `lapply()`, I quickly realise this won't work as `lapply()` doesn't keep the names of the object being iterated over.
+
+```{r}
+lapply(myvec, function(value){
+  paste(names(value), " = ", value)
+})
+```
+
+This question had been asked previous [on Stack Overflow](https://stackoverflow.com/questions/9469504/access-and-preserve-list-names-in-lapply-function) and the next thing I attempted was to use `sapply()`, which didn't work either.
+
+```{r}
+sapply(myvec, function(value){
+  paste(names(value), " = ", value)
+}, simplify = FALSE, USE.NAMES = TRUE)
+```
+
+The solution I went with in the end uses `purrr` and gives me further incentive to get round to learning it properly future!
+
+My fantastic colleague, John Drummond, pointed out that this can be achieved via the use of `map()` like so:
+
+```{r}
+map(names(myvec),~paste(.x,"=",myvec[[.x]]))
+```
+
+However, I prefer the syntax of `map2()` which provides me with a slightly more readable solution:
+
+```{r}
+
+map2(myvec, names(myvec), ~paste(.y, "=", .x))
+```
+
+Do you know any other ways of achieving my goals: iterating through a named list or vector, using both names and values, with an emphasis on readability?  Let me know [on Twitter](https://twitter.com/nic_crane).
+
+[Update]
+
+As ever, the R Twitter community is amazing, and in a matter of minutes this even better `purrr` solution was highlighted by the fantastic [\@rensa_co](https://twitter.com/rensa_co) (and just minutes later [\@romain_francois](https://twitter.com/romain_francois) too!)
+```{r}
+
+imap(myvec, ~paste(.y, "=", .x))
+```
+
+A little bit of context here; bear in mind that I haven't provided argument names above, simply for the sake of brevity and readability:
+
+`imap()` is an indexed map and its first argument `.x` (in this case `myvec`) is the list or vector.
+
+The second argument (`.f`) can be specified in a few different ways (as a function, formula, or vector), but here I've used the formula syntax (as marked by the `~`).
+
+Within the body of the formula, `.x` refers to the element itself and `.y` refers to the name of the element.
