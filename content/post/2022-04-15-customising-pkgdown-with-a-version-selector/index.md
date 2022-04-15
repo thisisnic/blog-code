@@ -9,7 +9,7 @@ categories:
 tags: []
 ---
 
-One of the things I've been working on lately is implementing a version for the Arrow pkgdown site, so that users can browse to previous versions of the documentation.  In this post, I discuss the problem and the implemented solution.
+One of the things I've been working on lately is implementing a version selector for the Arrow pkgdown site, so that users can browse to previous versions of the documentation.  In this post, I discuss the problem and the implemented solution.
 
 ## The problem
 
@@ -212,6 +212,5 @@ $pathEnd  = function(){
 ## Conclusion
 
 Awesome, thanks for sticking with me as I walked through that.  This was honestly a bit of a PITA to do as I'm not the best JS developer, and the bugs were a pain to solve without being able to easily replicate them with my browsers/OS (I'm sure there are tools out there to do it but honestly just having a quick call with a colleague was the simplest solution!)  I would have loved to have done something where I ended up submitting a PR to pkgdown to make this a more general feature, but this solution is super-custom and isn't set up that way.  That said, this was a super interesting problem to solve, and it was good fun working out how to fit all the pieces together!
-
 
 <img src="images/finalthing.png" alt="screenshot of Arrow pkgdown site with dropdown selector clicked on" width="100%"/>
