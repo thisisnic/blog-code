@@ -117,21 +117,20 @@ $(document).ready(function () {
      // Get the start of the path which includes the version number or "dev"
      // where applicable and add the "/docs/" suffix
     $pathStart = function(){
-	    return window.location.origin + "/docs/";
+      return window.location.origin + "/docs/";
     }
-
-
+    
     // Get the end of the path after the version number or "dev" if present
     $pathEnd  = function(){
       var current_path = window.location.pathname;
       return current_path.match("(?<=\/r).*");
     }
-
+    
     // Load JSON file mapping between docs version and R package version
     $.getJSON("https://arrow.apache.org/docs/r/versions.json", function( data ) {
       // get the current page's version number:
-		  var displayed_version = $('.version').text();
-		  // Create a dropdown selector and add the appropriate attributes
+      var displayed_version = $('.version').text();
+      // Create a dropdown selector and add the appropriate attributes
       const sel = document.createElement("select");
       sel.name = "version-selector";
       sel.id = "version-selector";
@@ -139,10 +138,10 @@ $(document).ready(function () {
       // When the selected value is changed, take the user to the version
       // of the page they are browsing in the selected version
       sel.onchange = check_page_exists_and_redirect;
-
+      
       // For each of the items in the JSON object (name/version pairs)
-		  $.each( data, function( key, val ) {
-		    // Add a new option to the dropdown selector
+      $.each( data, function( key, val ) {
+        // Add a new option to the dropdown selector
         const opt = document.createElement("option");
         // Set the path based on the 'version' field
         opt.value = $pathStart() + val.version + "r" + $pathEnd();
@@ -152,8 +151,8 @@ $(document).ready(function () {
         opt.text = val.name;
         // Add to the selector
         sel.append(opt);
-	    });
-
+      });
+      
       // Replace the HTML "version" component with the new selector
       $("span.version").replaceWith(sel);
     });
