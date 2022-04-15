@@ -159,6 +159,34 @@ $(document).ready(function () {
 });
 ```
 
+Here's the code which checks if the page exists, and if not, redirect to the main page:
+
+```
+function check_page_exists_and_redirect(event) {
+
+    /**
+       * When a user uses the version dropdown in the docs, check if the page
+       * they are currently browsing exists in that version of the docs.
+       * If yes, take them there; if no, take them to the main docs page.
+       */
+       
+    const path_to_try = event.target.value;
+    
+    const base_path = path_to_try.match("(.*\/r\/)?")[0];
+    let tryUrl = path_to_try;
+    $.ajax({
+        type: 'HEAD',
+        url: tryUrl,
+        success: function() {
+            location.href = tryUrl;
+        }
+    }).fail(function() {
+        location.href = base_path;
+    });
+    return false;
+}
+```
+
 ## Testing
 
 I considered testing this locally, but it was tricky because the code for breaking up the URL didn't quite work properly when running this on localhost.  I could have tried to fix that, but I'd also have to simulate having multiple versions of deployed docs, and ultimately it was much simpler to test on the live docs instead.  
