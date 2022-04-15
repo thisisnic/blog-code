@@ -26,7 +26,7 @@ Instead, at the suggestion of a colleague, I opted for a simpler solution - usin
 Arrow already has the CI set up to deploy different versions of the docs to specific URLs - the task here is just to point pkgdown to the right place.  The docs are deployed to the following URLs:
 * https://arrow.apache.org/docs/r/ - the released version
 * https://arrow.apache.org/docs/dev/r/ - the dev version
-* https://arrow.apache.org/docs/<arrow release version number>/r/ - a previous version
+* https://arrow.apache.org/docs/[arrow release version number]/r/ - a previous version
 
 When creating a pkgdown site, you can [display the package version in the navbar](https://pkgdown.r-lib.org/reference/build_site.html).  Here's how this looks on an older version of the Arrow R package docs:
 
