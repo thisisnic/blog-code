@@ -1,6 +1,16 @@
 ---
 title: "Speaking"
 ---
+
+## 2022
+* 7th October - "Firing an Arrow into the internet of things: combining the power of Arrow, Raspberry Pi & Shiny" (co-presented with Mark Sellors)
+* 27th July - RStudio Conference, Washington, DC - "What they forgot to teach you about becoming an open source contributor" [[video]](https://www.youtube.com/watch?v=CiETLJvJ5BQ)
+* 23rd June - The Data Thread (remote) - "Contributing to the Arrow R Package - Get Involved!" [[video]](https://www.youtube.com/watch?v=E__dvxv0Tyg)
+
+## 2021
+
+* 25th November - RLadies Johannesburg - "Introduction to the {arrow} package" [[video]](https://www.youtube.com/watch?v=603Sc3f6JwQ)
+
 ## 2019
 
 * 4th February - Oxford R User Group, Oxford - "Ten Steps to Becoming a Tidyverse Contributor" [[slides]](https://github.com/thisisnic/TenStepsToBecomingATidyverseContributorOxfordR/raw/master/Ten_Steps_to_Becoming_a_Tidyverse_Contributor.pptx)
