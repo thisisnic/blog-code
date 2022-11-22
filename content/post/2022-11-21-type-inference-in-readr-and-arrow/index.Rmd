@@ -21,7 +21,8 @@ more complex than a text editor, those data types must be inferred by
 whatever is reading the data.
 
 In this blog post, I'm going to discuss how CSV type inference works in
-the R packages [readr](https://readr.tidyverse.org/) and [arrow](https://arrow.apache.org/docs/r/), and highlight the differences between
+the R packages [readr](https://readr.tidyverse.org/) and 
+[arrow](https://arrow.apache.org/docs/r/), and highlight the differences between
 the two.
 
 Before I get started though, I'd like to acknowledge that this post is 
