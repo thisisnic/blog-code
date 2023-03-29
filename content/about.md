@@ -8,6 +8,6 @@ Hi, I'm Nic.  I'm an R developer, currently working at Voltron Data on Apache Ar
 
 I spent the next few years expanding my skillset, working as a data scientist, developing end-to-end machine learning pipelines in R and Python.  I'm now working as a software engineer at [Voltron Data](https://voltrondata.com/) on [Apache Arrow](https://arrow.apache.org/), and absolutely loving being able to work full-time on open source.
 
-You can find me on Twitter: [@nic_crane](https://twitter.com/nic_crane), foddstodon[@nic_crane@fosstodon.org ](https://fosstodon.org/@nic_crane), my CV is  [here](https://thisisnic.github.io/NCrane_CV_March_2021.pdf), or take a look at what I've been up to on [Github](https://github.com/thisisnic).
+You can find me on Twitter: [@nic_crane](https://twitter.com/nic_crane), fosstodon[@nic_crane@fosstodon.org ](https://fosstodon.org/@nic_crane), my CV is  [here](https://thisisnic.github.io/CV.pdf), or take a look at what I've been up to on [Github](https://github.com/thisisnic).
 
 
